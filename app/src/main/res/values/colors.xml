@@ -6,5 +6,7 @@
     <color name="colorBlack">#111111</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="coloCBlue">#1597DC</color>
+    <color name="text_border_focused">#FDB890</color>
+    <color name="text_border_normal">#E5E5E5</color>
 
 </resources>

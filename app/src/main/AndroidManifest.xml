@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".statusLayoutManager.StatusLayoutManagerActivity"
-            android:theme="@style/StatusTheme"></activity>
+            android:theme="@style/StatusTheme" />
+        <activity android:name=".securityCode.SecurityCodeActivity" />
+        <activity android:name=".keyBoard.KeyBoardActivity"
+            ></activity>
     </application>
 
 </manifest>

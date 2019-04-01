@@ -1,4 +1,4 @@
-package com.flb.sample.main;
+package com.flb.sample.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

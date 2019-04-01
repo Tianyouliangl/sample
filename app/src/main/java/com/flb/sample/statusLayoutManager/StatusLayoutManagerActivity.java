@@ -7,11 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
-import com.flb.sample.main.MainRecyclerViewAdapter;
+import com.flb.sample.adapter.MainRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

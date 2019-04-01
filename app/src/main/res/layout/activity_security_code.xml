@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorBlack"
+    android:layout_height="match_parent"
+    tools:context=".securityCode.SecurityCodeActivity">
+
+
+    <TextView
+        android:text="Code"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.flb.sample.widgets.VerificationCodeView
+        android:id="@+id/view_verification"
+        android:layout_marginTop="100dp"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        app:vcv_code_size="12sp"
+        android:layout_centerHorizontal="true"
+        app:vcv_code_bg_focus="@drawable/bg_text_focused"
+        app:vcv_code_bg_normal="@drawable/bg_text_normal"
+        app:vcv_code_color="@color/text_border_focused"
+        app:vcv_code_number="4"
+        app:vcv_code_width="50dp">
+    </com.flb.sample.widgets.VerificationCodeView>
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:text="清空"
+        android:background="@null"
+        android:textSize="14sp"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="40dp"
+        android:layout_alignRight="@id/view_verification"
+        android:layout_below="@id/view_verification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/view_verification"
+        android:layout_alignLeft="@id/view_verification"
+        android:layout_marginTop="53dp"
+        android:textSize="14sp"
+        android:layout_toLeftOf="@id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

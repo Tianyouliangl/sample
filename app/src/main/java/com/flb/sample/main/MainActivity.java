@@ -1,15 +1,14 @@
 package com.flb.sample.main;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
-import com.flb.sample.main.MainRecyclerViewAdapter;
+import com.flb.sample.adapter.MainRecyclerViewAdapter;
+import com.flb.sample.keyBoard.KeyBoardActivity;
+import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
 
 import java.util.ArrayList;
@@ -31,6 +30,8 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     public void initData() {
         mList = new ArrayList<>();
         mList.add("StatusLayoutManager");
+        mList.add("SecurityCode");
+        mList.add("KeyBoardStatus");
         setAdapter();
     }
 
@@ -58,6 +59,12 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         switch (position){
             case 0:
                 mIntent = new Intent(this, StatusLayoutManagerActivity.class);
+                break;
+            case 1:
+                mIntent = new Intent(this, SecurityCodeActivity.class);
+                break;
+            case 2:
+                mIntent = new Intent(this, KeyBoardActivity.class);
                 break;
             default:
                 break;
