@@ -28,10 +28,6 @@ public class KeyboardStatusDetector {
     public void registerActivity(Activity a) {
         registerView(a.getWindow().getDecorView().findViewById(android.R.id.content));
     }
-    public int getKeyBoardHeight(){
-
-        return 0;
-    }
 
     public KeyboardStatusDetector registerView(final View v) {
         v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
