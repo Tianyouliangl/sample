@@ -10,6 +10,7 @@ import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.keyBoard.KeyBoardActivity;
 import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
+import com.flb.sample.zXing.ZXingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("StatusLayoutManager");
         mList.add("SecurityCode");
         mList.add("KeyBoardStatus");
+        mList.add("ThinkChange");
         setAdapter();
     }
 
@@ -65,6 +67,9 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 break;
             case 2:
                 mIntent = new Intent(this, KeyBoardActivity.class);
+                break;
+            case 3:
+                mIntent = new Intent(this, ZXingActivity.class);
                 break;
             default:
                 break;

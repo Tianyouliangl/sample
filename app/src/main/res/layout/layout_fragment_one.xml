@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mLinear"
+    android:layout_height="match_parent">
+
+
+
+    <EditText
+        android:id="@+id/mInput_one"
+        android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/mInput_two"
+        android:layout_below="@id/mInput_one"
+        android:layout_width="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/item_popwindow_input" android:id="@+id/popwindow"></include>
+
+</RelativeLayout>

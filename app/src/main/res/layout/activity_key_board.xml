@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rl"
     android:layout_height="match_parent"
     tools:context=".keyBoard.KeyBoardActivity">
 
-    <EditText
-        android:id="@+id/ed_input_one"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:textSize="14sp"
+
+    <android.support.design.widget.TabLayout
+    android:id="@+id/mTabLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
 
-    <EditText
-        android:id="@+id/ed_input_two"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/ed_input_one"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-</RelativeLayout>
+</LinearLayout>

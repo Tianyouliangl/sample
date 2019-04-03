@@ -1,13 +1,12 @@
 package com.flb.sample.widgets;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-
-import com.flb.sample.main.MainActivity;
+import android.view.WindowManager;
 
 /**
  * author : 冯张伟
@@ -18,6 +17,7 @@ public class KeyboardStatusDetector {
 
     private static final int SOFT_KEY_BOARD_MIN_HEIGHT = 100;
     private KeyboardVisibilityListener mVisibilityListener;
+    private int screenHeight;
 
     boolean keyboardVisible = false;
 
@@ -26,6 +26,8 @@ public class KeyboardStatusDetector {
     }
 
     public void registerActivity(Activity a) {
+        screenHeight =  ((WindowManager) a.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getWidth();
         registerView(a.getWindow().getDecorView().findViewById(android.R.id.content));
     }
 
@@ -41,7 +43,7 @@ public class KeyboardStatusDetector {
                     if (!keyboardVisible) {
                         keyboardVisible = true;
                         if (mVisibilityListener != null) {
-                            mVisibilityListener.onVisibilityChanged(true,heightDiff);
+                            mVisibilityListener.onVisibilityChanged(true,Math.abs(screenHeight-r.bottom));
                         }
                     }
                 } else {
