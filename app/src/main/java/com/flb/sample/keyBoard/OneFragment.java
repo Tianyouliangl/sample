@@ -3,21 +3,16 @@ package com.flb.sample.keyBoard;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flb.sample.BaseFragment;
@@ -32,14 +27,13 @@ import java.lang.reflect.Method;
 public class OneFragment extends BaseFragment implements View.OnClickListener {
 
     private boolean mIsSoftKeyBoardShowing = false;
-    private ImageView iv_add_pic;
-    private RelativeLayout mLinear;
     private PopupWindow mSoftKeyboardTopPopupWindow;
     private EditText mInput_one;
     private EditText mInput_two;
     private int screenHeight;
     private int keyboardHeight;
     private boolean isHasFous;
+    private RelativeLayout mLinear;
 
     @Override
     public int getLayoutId() {
@@ -48,9 +42,7 @@ public class OneFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initView(View GroupView) {
-
         mLinear = GroupView.findViewById(R.id.mLinear);
-        iv_add_pic = GroupView.findViewById(R.id.iv_add_pic);
         mInput_one = GroupView.findViewById(R.id.mInput_one);
         mInput_two = GroupView.findViewById(R.id.mInput_two);
 
@@ -60,7 +52,6 @@ public class OneFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void initData() {
         getActivity().getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardOnGlobalChangeListener());
-        iv_add_pic.setOnClickListener(this);
         mInput_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -150,44 +141,8 @@ public class OneFragment extends BaseFragment implements View.OnClickListener {
 
     private void updateKeyboardTopPopupWindow(int x, int y) {
         if (mSoftKeyboardTopPopupWindow != null && mSoftKeyboardTopPopupWindow.isShowing()) {
-            boolean b = checkDeviceHasNavigationBar(getContext());
-            y += getNavigationBarHeight(getContext());
             mSoftKeyboardTopPopupWindow.update(x, y, mSoftKeyboardTopPopupWindow.getWidth(), mSoftKeyboardTopPopupWindow.getHeight());
         }
-    }
-
-    public boolean checkDeviceHasNavigationBar(Context context) {
-        boolean hasNavigationBar = false;
-        Resources rs = context.getResources();
-        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            hasNavigationBar = rs.getBoolean(id);
-        }
-        try {
-            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
-            Method m = systemPropertiesClass.getMethod("get", String.class);
-            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                //不存在虚拟按键
-                hasNavigationBar = false;
-            } else if ("0".equals(navBarOverride)) {
-                //存在虚拟按键
-                hasNavigationBar = true;
-            }
-        } catch (Exception e) {
-        }
-        return hasNavigationBar;
-    }
-    public int getNavigationBarHeight(Context context) {
-        int result = 0;
-        if (checkDeviceHasNavigationBar(context)) {
-            Resources res = context.getResources();
-            int resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
-            if (resourceId > 0) {
-                result = res.getDimensionPixelSize(resourceId);
-            }
-        }
-        return result;
     }
 
 }
