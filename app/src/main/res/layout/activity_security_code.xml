@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorBlack"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBlack"
     tools:context=".securityCode.SecurityCodeActivity">
 
 
@@ -21,16 +21,17 @@
 
     <com.flb.sample.widgets.VerificationCodeView
         android:id="@+id/view_verification"
-        android:layout_marginTop="100dp"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:vcv_code_size="12sp"
-        android:layout_centerHorizontal="true"
-        app:vcv_code_bg_focus="@drawable/bg_text_focused"
-        app:vcv_code_bg_normal="@drawable/bg_text_normal"
-        app:vcv_code_color="@color/text_border_focused"
-        app:vcv_code_number="4"
-        app:vcv_code_width="50dp">
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:vcv_et_bg="@drawable/bg_text_focused"
+        app:vcv_et_cursor="@drawable/bg_text_normal"
+        app:vcv_et_inputType="number"
+        app:vcv_et_number="4"
+        app:vcv_et_text_color="@android:color/black"
+        app:vcv_et_text_size="6sp">
     </com.flb.sample.widgets.VerificationCodeView>
 
     <Button
@@ -52,6 +53,7 @@
         android:layout_alignLeft="@id/view_verification"
         android:layout_marginTop="53dp"
         android:textSize="14sp"
+        android:layout_marginLeft="50dp"
         android:layout_toLeftOf="@id/btn_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
