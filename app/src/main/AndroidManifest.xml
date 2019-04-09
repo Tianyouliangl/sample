@@ -24,7 +24,8 @@
             android:theme="@style/StatusTheme" />
         <activity android:name=".securityCode.SecurityCodeActivity" />
         <activity android:name=".keyBoard.KeyBoardActivity" />
-        <activity android:name=".zXing.ZXingActivity"></activity>
+        <activity android:name=".zXing.ZXingActivity" />
+        <activity android:name=".douyin.DouYinActivity"></activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
+import com.flb.sample.douyin.DouYinActivity;
 import com.flb.sample.keyBoard.KeyBoardActivity;
 import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("SecurityCode");
         mList.add("KeyBoardStatus");
         mList.add("ThinkChange");
+        mList.add("仿抖音上下滑动");
         setAdapter();
     }
 
@@ -70,6 +72,9 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 break;
             case 3:
                 mIntent = new Intent(this, ZXingActivity.class);
+                break;
+            case 4:
+                mIntent = new Intent(this, DouYinActivity.class);
                 break;
             default:
                 break;

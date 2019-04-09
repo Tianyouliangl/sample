@@ -9,5 +9,6 @@
     <color name="text_border_focused">#FDB890</color>
     <color name="text_border_normal">#E5E5E5</color>
     <color name="colorD4D4D4">#D4D4D4</color>
+    <color name="color80Black">#80111111</color>
 
 </resources>
