@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <cn.jzvd.JZVideoPlayerStandard
-        android:id="@+id/jz_video"
-        android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:layout_height="match_parent">
+   <com.flb.sample.douyin.MyVideo
+       android:id="@+id/mSurfaceView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+   </com.flb.sample.douyin.MyVideo>
 
-    </cn.jzvd.JZVideoPlayerStandard>
 
 </RelativeLayout>

@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.flb.sample.R;
+import com.flb.sample.douyin.MyVideo;
 
 import java.util.List;
 
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+
 
 /**
  * author : 冯张伟
@@ -35,16 +36,20 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     }
 
     @Override
-    public void onBindViewHolder(VideoHolder holder, int position) {
+    public void onBindViewHolder(final VideoHolder holder, final int position) {
 
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
         layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
 
+        holder.mSurfaceView.setUp(urlList.get(position),"", Jzvd.CURRENT_STATE_NORMAL);
+        if (position == 0) {
+            holder.mSurfaceView.startVideo();
+        }
 
-        holder.jz_video.setUp(urlList.get(position),JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
-        Glide.with(mContext).load(urlList.get(position)).into(holder.jz_video.thumbImageView);
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -52,13 +57,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     }
 
 
-    class VideoHolder extends RecyclerView.ViewHolder {
+    public class VideoHolder extends RecyclerView.ViewHolder {
 
-        public JZVideoPlayerStandard jz_video;
+
+        public MyVideo mSurfaceView;
 
         public VideoHolder(View itemView) {
             super(itemView);
-            jz_video = itemView.findViewById(R.id.jz_video);
+            mSurfaceView = itemView.findViewById(R.id.mSurfaceView);
         }
     }
+
 }

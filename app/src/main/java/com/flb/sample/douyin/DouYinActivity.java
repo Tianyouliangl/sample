@@ -1,11 +1,8 @@
 package com.flb.sample.douyin;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
@@ -20,6 +17,7 @@ public class DouYinActivity extends BaseActivity {
     private List<String> urlList;
     private PagerSnapHelper snapHelper;
     private LinearLayoutManager layoutManager;
+    private VideoAdapter mAdapter;
 
     @Override
     public int getContentView() {
@@ -34,23 +32,47 @@ public class DouYinActivity extends BaseActivity {
         dy_rv.setLayoutManager(layoutManager);
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(dy_rv);
+        dy_rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE://停止滚动
+//                        View view = snapHelper.findSnapView(layoutManager);
+//                        JZVideoPlayer.releaseAllVideos();
+//                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+//                        if (viewHolder != null && viewHolder instanceof VideoAdapter.VideoHolder) {
+//                            ((VideoAdapter.VideoHolder) viewHolder).mSurfaceView.startVideo();
+//                        }
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING://拖动
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING://惯性滑动
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
     public void initData() {
         urlList = new ArrayList<>();
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        urlList.add("https://lmp4.vjshi.com/2019-04-08/9ff0602ba8eca8e3aef1043c39afd1bf.mp4");
-        VideoAdapter adapter = new VideoAdapter(urlList, this);
-        dy_rv.setAdapter(adapter);
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201805/100651/201805181532123423.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803151735198462.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803150923220770.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803150922255785.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803150920130302.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803141625005241.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803141624378522.mp4");
+        urlList.add("http://chuangfen.oss-cn-hangzhou.aliyuncs.com/public/attachment/201803/100651/201803131546119319.mp4");
+        mAdapter = new VideoAdapter(urlList, this);
+        dy_rv.setAdapter(mAdapter);
+
     }
+
+
 }
