@@ -8,6 +8,7 @@ import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.douyin.DouYinActivity;
+import com.flb.sample.dynamic.DynamicActivity;
 import com.flb.sample.keyBoard.KeyBoardActivity;
 import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
@@ -36,6 +37,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("KeyBoardStatus");
         mList.add("ThinkChange");
         mList.add("仿抖音上下滑动");
+        mList.add("上传图片(多张)");
         setAdapter();
     }
 
@@ -75,6 +77,9 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 break;
             case 4:
                 mIntent = new Intent(this, DouYinActivity.class);
+                break;
+            case 5:
+                mIntent = new Intent(this, DynamicActivity.class);
                 break;
             default:
                 break;

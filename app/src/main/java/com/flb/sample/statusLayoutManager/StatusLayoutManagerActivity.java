@@ -146,7 +146,6 @@ public class StatusLayoutManagerActivity extends BaseActivity implements OnStatu
                          startActivity(mIntent);
                          break;
                      default:
-
                          break;
                  }
 

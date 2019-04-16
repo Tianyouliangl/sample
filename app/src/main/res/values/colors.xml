@@ -10,5 +10,7 @@
     <color name="text_border_normal">#E5E5E5</color>
     <color name="colorD4D4D4">#D4D4D4</color>
     <color name="color80Black">#80111111</color>
+    <color name="color_40EEEEEE">#40EEEEEE</color>
+    <color name="color_9BA4AC">#9BA4AC</color>
 
 </resources>

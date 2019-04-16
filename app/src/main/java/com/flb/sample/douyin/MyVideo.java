@@ -57,6 +57,7 @@ public class MyVideo extends JzvdStd {
     public boolean onTouch(View v, MotionEvent event) {
         int i = v.getId();
         if (i == cn.jzvd.R.id.surface_container) {
+            bottomContainer.setVisibility(View.GONE);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     break;
