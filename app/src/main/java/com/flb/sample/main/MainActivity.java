@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.flb.sample.BaseActivity;
+import com.flb.sample.Logutils.LogUtilsActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.douyin.DouYinActivity;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("仿抖音上下滑动");
         mList.add("上传图片(多张)");
         mList.add("查看本地文件");
+        mList.add("LogUtils");
         setAdapter();
     }
 
@@ -57,9 +59,9 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     }
 
     private void setAdapter() {
-        if (mAdapter == null){
-            mAdapter = new MainRecyclerViewAdapter(this,mList);
-        }else {
+        if (mAdapter == null) {
+            mAdapter = new MainRecyclerViewAdapter(this, mList);
+        } else {
             mAdapter.notifyDataSetChanged();
         }
         mAdapter.setOnClickItemListener(this);
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     @Override
     public void onClickItem(int position) {
 
-        switch (position){
+        switch (position) {
             case 0:
                 mIntent = new Intent(this, StatusLayoutManagerActivity.class);
                 startActivity(mIntent);
@@ -96,20 +98,24 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 startActivity(mIntent);
                 break;
             case 6:
-                RxPermissions rxPermissions=new RxPermissions(this);
+                RxPermissions rxPermissions = new RxPermissions(this);
                 rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean){
+                        if (aBoolean) {
                             //申请的权限全部允许
                             mIntent = new Intent(MainActivity.this, FileActivity.class);
                             startActivity(mIntent);
-                        }else{
+                        } else {
                             //只要有一个权限被拒绝，就会执行
                             Toast.makeText(MainActivity.this, "未授权权限，部分功能不能使用", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+                break;
+            case 7:
+                mIntent = new Intent(this, LogUtilsActivity.class);
+                startActivity(mIntent);
                 break;
             default:
                 break;

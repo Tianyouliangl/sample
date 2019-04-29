@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Logutils.LogUtilsActivity"></activity>
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +37,7 @@
         <activity android:name=".douyin.DouYinActivity" />
         <activity android:name=".dynamic.DynamicActivity" />
         <activity android:name=".file.FileActivity" />
-        <activity android:name=".dynamic.DyVideoActivity"></activity>
+        <activity android:name=".dynamic.DyVideoActivity" />
     </application>
 
 </manifest>
