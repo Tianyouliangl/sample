@@ -16,7 +16,7 @@ public class TwoFragment extends BaseFragment {
     }
 
     @Override
-    public void initView(View GroupView) {
+    public void initView(View View) {
 
     }
 

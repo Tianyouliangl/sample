@@ -53,4 +53,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation project(':jiaozivideoplayer')
     implementation project(':picture_library')
+    // 加载gif
+    //implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    // loding
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    // 权限申请
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    implementation project(':ucrop')
 }

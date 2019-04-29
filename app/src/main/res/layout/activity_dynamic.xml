@@ -1,95 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".dynamic.DynamicActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@drawable/shape_dynamic"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_save_bitmap"
+            android:text="保存当前界面"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_video"
+            android:text="上传视频"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
 
-        <LinearLayout
+    </LinearLayout>
+
+
+    <ScrollView
+        android:fillViewport="true"
+        android:id="@+id/mScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_height="match_parent">
-            <EditText
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/shape_dynamic"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@null"
-                android:gravity="left"
-                android:paddingTop="6dp"
-                android:textSize="13sp"
-                android:paddingLeft="6dp"
-                android:hint="记录你此刻的想法."
-                android:layout_height="100dp" />
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:paddingTop="6dp"
+                    android:textSize="13sp"
+                    android:paddingLeft="6dp"
+                    android:hint="记录你此刻的想法."
+                    android:layout_height="100dp" />
 
-            <com.flb.sample.widgets.DisplayChildGridView
-                android:id="@+id/dis_gridView"
+                <com.flb.sample.widgets.DisplayChildGridView
+                    android:id="@+id/dis_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:horizontalSpacing="8dp"
+                    android:numColumns="5"
+                    android:padding="6dp"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="none"
+                    android:verticalSpacing="8dp">
+                </com.flb.sample.widgets.DisplayChildGridView>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_get_code"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:horizontalSpacing="8dp"
-                android:numColumns="5"
-                android:padding="6dp"
-                android:fadeScrollbars="false"
-                android:scrollbars="none"
-                android:verticalSpacing="8dp">
-            </com.flb.sample.widgets.DisplayChildGridView>
-        </LinearLayout>
+                android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/fl_get_code"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:layout_width="150dp"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:background="@drawable/shape_rounded"
-                android:layout_height="150dp">
-                <ProgressBar
-                    android:id="@+id/loading_pb"
-                    android:layout_width="45dp"
+                <RelativeLayout
+                    android:layout_width="150dp"
                     android:layout_centerInParent="true"
-                    android:indeterminateTint="@color/coloCBlue"
                     android:layout_gravity="center"
-                    android:layout_height="45dp" />
+                    android:background="@drawable/shape_rounded"
+                    android:layout_height="150dp">
+                    <ProgressBar
+                        android:id="@+id/loading_pb"
+                        android:layout_width="45dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/coloCBlue"
+                        android:layout_gravity="center"
+                        android:layout_height="45dp" />
 
-                <TextView
-                    android:id="@+id/tv_hint"
-                    android:text="正在上传..."
-                    android:textSize="18sp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_above="@id/loading_pb"
-                    android:layout_marginBottom="12dp"
-                    android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tv_hint"
+                        android:text="正在上传..."
+                        android:textSize="18sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_above="@id/loading_pb"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tv_progress"
-                    android:text="0%"
-                    android:layout_centerInParent="true"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tv_progress"
+                        android:text="0%"
+                        android:layout_centerInParent="true"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
+
+            </FrameLayout>
 
         </FrameLayout>
+    </ScrollView>
 
-    </FrameLayout>
 
 
-</ScrollView>
+
+</LinearLayout>

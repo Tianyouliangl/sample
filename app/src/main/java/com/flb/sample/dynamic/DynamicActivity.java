@@ -1,16 +1,24 @@
 package com.flb.sample.dynamic;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
@@ -18,6 +26,7 @@ import com.flb.sample.adapter.DynamicAdapter;
 import com.flb.sample.model.FileUploadJson;
 import com.flb.sample.widgets.CmRequestBody;
 import com.flb.sample.widgets.DisplayChildGridView;
+import com.flb.sample.widgets.FileUtils;
 import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -25,10 +34,14 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -40,7 +53,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DynamicActivity extends BaseActivity implements DynamicAdapter.onItemInterface, Callback {
+public class DynamicActivity extends BaseActivity implements DynamicAdapter.onItemInterface, Callback, View.OnClickListener {
 
     private DisplayChildGridView mGridView;
     private List<String> mList;
@@ -49,6 +62,8 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
     private List<LocalMedia> selectList;
     private TextView tv_progress;
     private TextView tv_hint;
+    private Button btn_save_bitmap;
+    private ScrollView mScrollView;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -75,11 +90,27 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
                     updateAdapter();
                     mLoading.setVisibility(View.GONE);
                     break;
+                case 5:
+                    String picFile = (String) msg.obj;
+                    String[] split = picFile.split("/");
+                    String fileName = split[split.length - 1];
+                    try {
+                        MediaStore.Images.Media.insertImage(getApplicationContext()
+                                .getContentResolver(), picFile, fileName, null);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    sendBroadcast(new Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://"
+                            + picFile)));
+                    Toast.makeText(DynamicActivity.this, "图片保存图库成功", Toast.LENGTH_LONG).show();
+                    break;
                default:
                    break;
             }
         }
     };
+    private Button btn_video;
 
     private void updateAdapter() {
         if (adapter == null){
@@ -97,11 +128,16 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
 
     @Override
     public void initView() {
+        mScrollView = findViewById(R.id.mScrollView);
         mGridView = findViewById(R.id.dis_gridView);
         mLoading = findViewById(R.id.fl_get_code);
         tv_progress = findViewById(R.id.tv_progress);
         tv_hint = findViewById(R.id.tv_hint);
+        btn_video = findViewById(R.id.btn_video);
+        btn_save_bitmap = findViewById(R.id.btn_save_bitmap);
         mLoading.setVisibility(View.GONE);
+        btn_save_bitmap.setOnClickListener(this);
+        btn_video.setOnClickListener(this);
     }
 
     @Override
@@ -242,4 +278,67 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
         message.obj = msg;
         mHandler.sendMessage(message);
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_save_bitmap){
+            if (Build.VERSION.SDK_INT >= 26 && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+            Bitmap bitmap = getScrollViewBitmap(mScrollView);
+            saveBitMap("screen",bitmap);
+        }
+
+        if (v.getId() == R.id.btn_video){
+            startActivity(new Intent(this,DyVideoActivity.class));
+            finish();
+        }
+    }
+
+    //使用IO流将bitmap对象存到本地指定文件夹
+    public  void saveBitMap(final String bitName,final Bitmap bitmap){
+        new Thread(){
+            @Override
+            public void run() {
+                String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dearxy";
+                FileOutputStream outputStream = null;
+                String imageDate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+                File appDir = new File(storePath);
+                if (!appDir.exists()) {
+                    appDir.mkdir();
+                }
+                String lastPath = storePath + "/screen/captrue/" + imageDate + bitName + ".jpeg";
+                File newFile = FileUtils.createNewFile(new File(lastPath));
+                try {
+                    outputStream = new FileOutputStream(newFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+                    Message msg = Message.obtain();
+                    msg.what = 5;
+                    msg.obj = newFile.getPath();
+                    mHandler.sendMessage(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+    }
+
+    public static Bitmap getScrollViewBitmap(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+        }
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
+    }
+
+
+
 }

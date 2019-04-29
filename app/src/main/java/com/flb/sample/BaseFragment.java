@@ -30,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract int getLayoutId();
 
-    public abstract void initView(View GroupView);
+    public abstract void initView(View View);
 
     public abstract void initData();
 }

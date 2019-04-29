@@ -41,10 +41,10 @@ public class OneFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    public void initView(View GroupView) {
-        mLinear = GroupView.findViewById(R.id.mLinear);
-        mInput_one = GroupView.findViewById(R.id.mInput_one);
-        mInput_two = GroupView.findViewById(R.id.mInput_two);
+    public void initView(View View) {
+        mLinear = View.findViewById(R.id.mLinear);
+        mInput_one = View.findViewById(R.id.mInput_one);
+        mInput_two = View.findViewById(R.id.mInput_two);
 
 
     }
