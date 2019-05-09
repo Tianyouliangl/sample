@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.flb.sample.BaseActivity;
-import com.flb.sample.Logutils.LogUtilsActivity;
+import com.flb.sample.alarm.AlarmClockActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.douyin.DouYinActivity;
@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("仿抖音上下滑动");
         mList.add("上传图片(多张)");
         mList.add("查看本地文件");
-        mList.add("LogUtils");
+        mList.add("闹钟");
         setAdapter();
     }
 
@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 });
                 break;
             case 7:
-                mIntent = new Intent(this, LogUtilsActivity.class);
+                mIntent = new Intent(this, AlarmClockActivity.class);
                 startActivity(mIntent);
                 break;
             default:
@@ -127,4 +127,5 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 }

@@ -1,4 +1,4 @@
-package com.flb.sample.Logutils.utils;
+package com.flb.sample.widgets;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;

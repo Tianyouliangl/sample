@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+      <TextView
+          android:id="@+id/alarm_item_time"
+          android:text="16:40"
+          android:textSize="26sp"
+          android:gravity="center_vertical"
+          android:textColor="@color/coloCBlue"
+          android:layout_marginLeft="20dp"
+          android:layout_marginTop="6dp"
+          android:layout_marginBottom="2dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/alarm_item_title"
+        android:text="保重呀"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:layout_toLeftOf="@id/alarm_item_iv_open"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:textColor="@color/coloCBlue"
+        android:textSize="14sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/alarm_item_time"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/alarm_item_msg"
+        android:text="每天"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/coloCBlue"
+        android:layout_toLeftOf="@id/alarm_item_iv_open"
+        android:layout_below="@id/alarm_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/alarm_item_iv_open"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/open_n"
+        android:layout_width="50dp"
+        android:layout_height="30dp" />
+
+</RelativeLayout>
