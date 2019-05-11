@@ -1,1 +1,2 @@
 include ':app',"jiaozivideoplayer","picture_library","ucrop"
+include ':wheelview'

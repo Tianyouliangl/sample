@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -39,7 +40,11 @@
         <activity android:name=".file.FileActivity" />
         <activity android:name=".dynamic.DyVideoActivity" />
         <activity android:name=".alarm.AlarmClockActivity" />
-        <activity android:name=".alarm.SetAlarmClickActivity"></activity>
+        <activity android:name=".alarm.SetAlarmClickActivity" />
+
+        <service android:name=".service.AlarmClockService" />
+
+        <activity android:name=".alarm.ClockRemindActivity" android:theme="@style/dialog_style"></activity>
     </application>
 
 </manifest>

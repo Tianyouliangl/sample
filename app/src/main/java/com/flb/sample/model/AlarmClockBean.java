@@ -1,17 +1,19 @@
 package com.flb.sample.model;
 
+import java.io.Serializable;
+
 /**
  * author : 冯张伟
  * date : 2019/5/9
  */
-public class AlarmClockBean {
+public class AlarmClockBean implements Serializable {
     public  String NAME; // 闹钟名字
     public  String time; // 响铃时间
     public  String type; // 每天  一次  周一至周五  1   2   3
     public  String number = "0"; // 响了几次
-    public  String interval_time = "0"; // 响铃间隔时间  0 不开启延时提醒
+    public  String interval_time = "5"; // 响铃间隔时间  0 不开启延时提醒   (暂时用不着)
     public  String alarm_remark;  // 备注
-    public  String open;  // 是否开启闹钟
+    public  String open;  // 是否开启闹钟  0  关闭  1  打开
     public  String isDelete = "0";  // 是否响铃后删除(仅限于响铃一次)  0 不删除  1  删除
     public  String isShake =  "1";  // 是否震动   0  no  1  yes
     public  String isCommit = "0";  // 是否完毕   0  no  1  yes

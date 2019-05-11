@@ -14,6 +14,7 @@ import com.flb.sample.R;
 import com.flb.sample.adapter.AlarmClockAdapter;
 import com.flb.sample.common.DBHelper;
 import com.flb.sample.model.AlarmClockBean;
+import com.flb.sample.service.AlarmClockService;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
+        startService(new Intent(this, AlarmClockService.class));
         alarm_add = findViewById(R.id.alarm_iv_add);
         alarm_rv = findViewById(R.id.alarm_rv);
         mLayoutManage = new LinearLayoutManager(this);
@@ -56,15 +58,21 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
         getData();
     }
 
-    private void getData() {
+    private int getData() {
         if (list.size() > 0){
             list.clear();
         }
-        list.addAll(DBHelper.getClockDataAll());
-        adapter.notifyDataSetChanged();
-    }
-    private void getData(int position) {
-        adapter.notifyItemChanged(position,1);
+        List<AlarmClockBean> sqList = DBHelper.getClockDataAll();
+        list.addAll(sqList);
+        if (adapter != null){
+            adapter.notifyDataSetChanged();
+        }else {
+            adapter = new AlarmClockAdapter(this, list);
+            alarm_rv.setAdapter(adapter);
+            adapter.setOnChangImageListener(this);
+        }
+
+        return sqList.size();
     }
 
     @Override
@@ -76,7 +84,7 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
                 public void accept(Boolean aBoolean) throws Exception {
                     if (aBoolean) {
                         //申请的权限全部允许
-                        startActivity(new Intent(AlarmClockActivity.this,SetAlarmClickActivity.class));
+                        SetAlarmClickActivity.Intent(getBaseContext(),true,null);
                     } else {
                         //只要有一个权限被拒绝，就会执行
                         Toast.makeText(AlarmClockActivity.this, "未授权权限，部分功能不能使用", Toast.LENGTH_SHORT).show();
@@ -90,16 +98,25 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClickItem(int position) {
         AlarmClockBean bean = list.get(position);
-        int i = DBHelper.deleteClockData(bean.getNAME());
-        if (i != -1){
-            getData();
-        }
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    //申请的权限全部允许
+                    SetAlarmClickActivity.Intent(getBaseContext(),false,bean);
+                } else {
+                    //只要有一个权限被拒绝，就会执行
+                    Toast.makeText(AlarmClockActivity.this, "未授权权限，部分功能不能使用", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     public void onOpenN(int position) {
         AlarmClockBean bean = list.get(position);
-        DBHelper.isOpen(false,bean.time);
+        DBHelper.isOpen(false, bean.getTime());
         getData();
         Toast.makeText(this,"闹钟已关闭",Toast.LENGTH_SHORT).show();
     }
@@ -107,7 +124,7 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onOpenY(int position) {
         AlarmClockBean bean = list.get(position);
-        DBHelper.isOpen(true,bean.time);
+        DBHelper.isOpen(true, bean.getTime());
         getData();
         Toast.makeText(this,"闹钟已开启",Toast.LENGTH_SHORT).show();
     }

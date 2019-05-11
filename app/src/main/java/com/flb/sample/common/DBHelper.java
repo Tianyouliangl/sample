@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.flb.sample.BaseApplication;
 import com.flb.sample.model.AlarmClockBean;
@@ -17,6 +18,7 @@ import java.util.List;
  * date : 2019/5/9
  */
 public class DBHelper extends SQLiteOpenHelper{
+
 
     public DBHelper(Context context) {
         super(context, Constant.type.TABLE_NAME, null, Constant.type.DB_VERSION);
@@ -64,13 +66,13 @@ public class DBHelper extends SQLiteOpenHelper{
 
     // 删除
     public static int deleteClockData(String clockTime){
-        int count = BaseApplication.getSQLiteDatabase().delete(Constant.type.TABLE_NAME, Constant.type.NAME + " = ?", new String[]{clockTime});
+        int count = BaseApplication.getSQLiteDatabase().delete(Constant.type.TABLE_NAME, Constant.type.time + " = ?", new String[]{clockTime});
         return count;
     }
 
-    // 查询
+    // 查询全部
     public static List<AlarmClockBean>  getClockDataAll(){
-        AlarmClockBean clockBean = new AlarmClockBean();
+
         ArrayList<AlarmClockBean> clockBeanArrayList = new ArrayList<>();
         Cursor cursor = BaseApplication.getSQLiteDatabase().query(Constant.type.TABLE_NAME,
                 null,
@@ -79,30 +81,19 @@ public class DBHelper extends SQLiteOpenHelper{
                 null,
                 null,
                 null);
-        int name = cursor.getColumnIndex(Constant.type.NAME);
-        int time = cursor.getColumnIndex(Constant.type.time);
-        int type = cursor.getColumnIndex(Constant.type.type);
-        int number = cursor.getColumnIndex(Constant.type.number);
-        int interval_time = cursor.getColumnIndex(Constant.type.interval_time);
-        int alarm_remark = cursor.getColumnIndex(Constant.type.alarm_remark);
-        int open = cursor.getColumnIndex(Constant.type.open);
-        int isDelete = cursor.getColumnIndex(Constant.type.isdelete);
-        int isShake = cursor.getColumnIndex(Constant.type.isShake);
-        int isCommit = cursor.getColumnIndex(Constant.type.isCommit);
         if (BaseApplication.getSQLiteDatabase().isOpen()){
             while (cursor.moveToNext()) {
-
-                String q_name = cursor.getString(name);
-                String q_time = cursor.getString(time);
-                String q_type = cursor.getString(type);
-                String q_number = cursor.getString(number);
-                String q_interval_time = cursor.getString(interval_time);
-                String q_alarm_remark = cursor.getString(alarm_remark);
-                String q_open = cursor.getString(open);
-                String q_isDelete = cursor.getString(isDelete);
-                String q_isShake = cursor.getString(isShake);
-                String q_isCommit = cursor.getString(isCommit);
-
+                AlarmClockBean clockBean = new AlarmClockBean();
+                String q_name = cursor.getString(cursor.getColumnIndex(Constant.type.NAME));
+                String q_time = cursor.getString(cursor.getColumnIndex(Constant.type.time));
+                String q_type = cursor.getString(cursor.getColumnIndex(Constant.type.type));
+                String q_number = cursor.getString(cursor.getColumnIndex(Constant.type.number));
+                String q_interval_time = cursor.getString(cursor.getColumnIndex(Constant.type.interval_time));
+                String q_alarm_remark = cursor.getString(cursor.getColumnIndex(Constant.type.alarm_remark));
+                String q_open = cursor.getString(cursor.getColumnIndex(Constant.type.open));
+                String q_isDelete = cursor.getString(cursor.getColumnIndex(Constant.type.isdelete));
+                String q_isShake = cursor.getString(cursor.getColumnIndex(Constant.type.isShake));
+                String q_isCommit = cursor.getString(cursor.getColumnIndex(Constant.type.isCommit));
                 clockBean.setNAME(q_name);
                 clockBean.setTime(q_time);
                 clockBean.setType(q_type);
@@ -115,11 +106,32 @@ public class DBHelper extends SQLiteOpenHelper{
                 clockBean.setIsCommit(q_isCommit);
                 clockBeanArrayList.add(clockBean);
             }
+            cursor.close();
         }
 
         return clockBeanArrayList;
     }
 
+    // 查询是否存在
+    public static Boolean isExist(String time){
+        if (BaseApplication.getSQLiteDatabase().isOpen()){
+            Cursor cursor = BaseApplication.getSQLiteDatabase().query(Constant.type.TABLE_NAME,
+                    null,
+                    Constant.type.time + " = ? ",
+                     new String[]{time},
+                    null,
+                    null,
+                    null);
+            if (cursor.moveToNext()){
+                cursor.close();
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    // 闹钟关闭/打开
     public static int  isOpen(Boolean b,String time){
         ContentValues values = new ContentValues();
         values.put(Constant.type.time, time);
@@ -130,6 +142,22 @@ public class DBHelper extends SQLiteOpenHelper{
             values.put(Constant.type.open, "0");
         }
         int count = BaseApplication.getSQLiteDatabase().update(Constant.type.TABLE_NAME, values, Constant.type.time + " = ?", new String[]{time});
+        return count;
+    }
+
+    public static int update(AlarmClockBean bean,String historyTime){
+        ContentValues values = new ContentValues();
+        values.put(Constant.type.NAME, bean.getNAME());
+        values.put(Constant.type.time, bean.getTime());
+        values.put(Constant.type.type, bean.getType());
+        values.put(Constant.type.number, bean.getNumber());
+        values.put(Constant.type.interval_time, bean.getInterval_time());
+        values.put(Constant.type.alarm_remark, bean.getAlarm_remark());
+        values.put(Constant.type.open, bean.getOpen());
+        values.put(Constant.type.isdelete, bean.getIsDelete());
+        values.put(Constant.type.isShake, bean.getIsShake());
+        values.put(Constant.type.isCommit, bean.getIsCommit());
+        int count = BaseApplication.getSQLiteDatabase().update(Constant.type.TABLE_NAME, values, Constant.type.time + " = ?", new String[]{historyTime});
         return count;
     }
 

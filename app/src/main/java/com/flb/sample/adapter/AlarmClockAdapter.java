@@ -1,6 +1,7 @@
 package com.flb.sample.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,24 +34,6 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
         return new AlarmClockViewHolder(view);
     }
 
-//    @Override
-//    public void onBindViewHolder(AlarmClockViewHolder holder, int position, List<Object> payloads) {
-//
-//        if (payloads.isEmpty()) {
-//            onBindViewHolder(holder, position);
-//        } else {
-//            final AlarmClockBean bean = mList.get(position);
-//            if (bean != null) {
-//                String open = bean.getOpen();
-//                if (open.equals("0")){
-//                    holder.iv_open.setImageResource(R.mipmap.open_n);
-//                }
-//                if (open.equals("1")){
-//                    holder.iv_open.setImageResource(R.mipmap.open_y);
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public void onBindViewHolder(AlarmClockViewHolder holder, int position) {
@@ -60,6 +43,7 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
         String open = mList.get(position).getOpen();
         String time = mList.get(position).getTime();
         String name = mList.get(position).getNAME();
+        String remark = mList.get(position).getAlarm_remark();
         holder.time.setText(time);
         holder.title.setText(name);
         if (type.equals("1")){
@@ -73,11 +57,22 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
         }
         if (open.equals("0")){
             holder.iv_open.setImageResource(R.mipmap.open_n);
+            holder.time.setTextColor(Color.rgb(200,200,200));
+            holder.title.setTextColor(Color.rgb(200,200,200));
+            holder.msg.setTextColor(Color.rgb(200,200,200));
         }
         if (open.equals("1")){
             holder.iv_open.setImageResource(R.mipmap.open_y);
+            holder.time.setTextColor(Color.rgb(21,151,220));
+            holder.title.setTextColor(Color.rgb(21,151,220));
+            holder.msg.setTextColor(Color.rgb(21,151,220));
         }
-        holder.msg.setText(m + " | " + mList.get(position).getAlarm_remark());
+        if (remark.isEmpty()){
+            holder.msg.setText(m);
+        }else {
+            holder.msg.setText(m + " | " + remark);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

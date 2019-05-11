@@ -1,9 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".alarm.SetAlarmClickActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_cancel_clock"
+                    android:src="@mipmap/cancel"
+                    android:layout_width="50dp"
+                    android:padding="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="50dp" />
+
+                <ImageView
+                    android:id="@+id/iv_save_clock"
+                    android:src="@mipmap/save"
+                    android:layout_width="50dp"
+                    android:padding="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="160dp">
+
+                <com.flb.sample.widgets.loopView.LoopView
+                    android:id="@+id/loop_h"
+                    android:layout_width="100dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toLeftOf="@id/tv_time_hint"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_time_hint"
+                    android:text=" : "
+                    android:textColor="@color/colorBlack"
+                    android:textSize="26dp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.flb.sample.widgets.loopView.LoopView
+                    android:id="@+id/loop_m"
+                    android:layout_width="100dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/tv_time_hint"
+                    android:layout_height="match_parent" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:layout_marginTop="8dp"
+                android:layout_height="1dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="名称:"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/ed_clock_name"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:background="@drawable/bg_text_focused"
+                    android:hint="Please Input ClockName"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:layout_marginTop="8dp"
+                android:layout_height="1dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="方式:"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+
+                <RadioGroup
+                    android:id="@+id/rg_group"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_btn_t"
+                        android:text="每天"
+                        android:checked="true"
+                        android:background="@null"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/rb_btn_x"
+                        android:text="周一至周五"
+                        android:background="@null"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/rb_btn_y"
+                        android:text="一次"
+                        android:background="@null"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:layout_marginTop="8dp"
+                android:layout_height="1dp"></View>
+
+        <RelativeLayout
+            android:id="@+id/rl_one"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="响完即删"
+                android:textColor="@color/colorAccent"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:src="@mipmap/open_n"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_width="50dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+            <View
+                android:id="@+id/lin_delete"
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:layout_height="1dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:text="是否震动"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/iv_shake"
+                    android:src="@mipmap/open_y"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="18dp"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:background="#D4D4D4"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="1dp"></View>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="备注:"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/ed_clock_remark"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:background="@drawable/bg_text_focused"
+                    android:hint="Please Input ClockRemark"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:layout_marginTop="8dp"
+                android:layout_height="1dp"></View>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btn_delete_clock"
+        android:text="删除闹钟"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
