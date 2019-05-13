@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.flb.sample.BaseActivity;
-import com.flb.sample.alarm.AlarmClockActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
+import com.flb.sample.alarm.AlarmClockActivity;
 import com.flb.sample.douyin.DouYinActivity;
 import com.flb.sample.dynamic.DynamicActivity;
 import com.flb.sample.file.FileActivity;

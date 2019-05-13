@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.flb.sample.common.DBHelper;
 import com.flb.sample.model.AlarmClockBean;
@@ -44,45 +43,15 @@ public class AlarmClockService extends Service{
 
     private void notification(AlarmClockBean bean) {
         String number = bean.getNumber();
-        String type = bean.getType();
         String commit = bean.getIsCommit();
         if (!commit.equals("1")) {
             if (number.equals("0")){
-                if (type.equals("1")) {  //每天
-                    bean.setNumber("1");
-                    bean.setIsCommit("1");
-                    DBHelper.update(bean,bean.getTime());
-                    Log.e("aaaaa","----每天----不在响了");
-                    EventBus.getDefault().postSticky(bean);
-                }
-
-                if (type.equals("2")){  // 一次
-                    bean.setNumber("1");
-                    bean.setIsCommit("1");
-                    bean.setOpen("0");
-                    DBHelper.update(bean,bean.getTime());
-                    Log.e("aaaaa","----一次----关闭");
-                    EventBus.getDefault().postSticky(bean);
-                }
-
-                if (type.equals("3")){ // 周一至周五
-                    String s = TimeUtil.StringData();
-                    if (s.equals("周一") ||
-                            s.equals("周二") ||
-                            s.equals("周三") ||
-                            s.equals("周四") ||
-                            s.equals("周五")){
-                        bean.setNumber("1");
-                        bean.setIsCommit("1");
-                        DBHelper.update(bean,bean.getTime());
-                        Log.e("aaaaa","----周一至周五----不在响了");
-                    }
+                  EventBus.getDefault().postSticky(bean);
                 }
             }
 
         }
 
-    }
 
 
     @Nullable

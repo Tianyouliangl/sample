@@ -154,7 +154,7 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
                 list_h.add(i+"");
             }
         }
-        for (int i = 1 ; i<60 ; i++){
+        for (int i = 0 ; i<60 ; i++){
             if (i < 10){
                 list_m.add("0"+i);
             }else {
@@ -278,15 +278,18 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
                 if (name.isEmpty()){
                     name = "闹钟" +(DBHelper.getClockDataAll().size() + 1);
                 }
-                saveAlarmClock(name,sumTime,selectType,selectDelete,ed_clock_remark.getText().toString(),"1",selectShake);
-                finish();
+                 saveAlarmClock(name,sumTime,selectType,selectDelete,ed_clock_remark.getText().toString(),"1",selectShake);
+                 finish();
+
+
             }
             if (!save){
-                AlarmClockBean bean = getAlarmClockBean(ed_clock_name.getText().toString(), sumTime, selectType, selectDelete, ed_clock_remark.getText().toString(),"1",selectShake);
-                int update = DBHelper.update(bean, historyBean.getTime());
-                if (update != -1){
-                    finish();
-                }
+                    AlarmClockBean bean = getAlarmClockBean(ed_clock_name.getText().toString(), sumTime, selectType, selectDelete, ed_clock_remark.getText().toString(),"1",selectShake);
+                    int update = DBHelper.update(bean, historyBean.getTime());
+                    if (update != -1){
+                        finish();
+                    }
+
             }
 
         }
