@@ -42,15 +42,8 @@ public class AlarmClockService extends Service{
     };
 
     private void notification(AlarmClockBean bean) {
-        String number = bean.getNumber();
-        String commit = bean.getIsCommit();
-        if (!commit.equals("1")) {
-            if (number.equals("0")){
-                  EventBus.getDefault().postSticky(bean);
-                }
-            }
-
-        }
+        EventBus.getDefault().postSticky(bean);
+    }
 
 
 
@@ -89,12 +82,12 @@ public class AlarmClockService extends Service{
             String time = bean.getTime();
             String sy_time = TimeUtil.getTimeString("HH:mm");
             if (open.equals("1")){
-                if (time.equals(sy_time)){
-                    Message obtain = Message.obtain();
-                    obtain.obj = bean;
-                    obtain.what = 1;
-                    mHandler.sendMessageDelayed(obtain,1000);
-                }
+                    if (time.equals(sy_time)){
+                        Message obtain = Message.obtain();
+                        obtain.obj = bean;
+                        obtain.what = 1;
+                        mHandler.sendMessageDelayed(obtain,1000);
+                    }
             }
         }
         mHandler.sendEmptyMessageDelayed(0,1000);

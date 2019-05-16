@@ -1,2 +1,1 @@
-include ':app',"jiaozivideoplayer","picture_library","ucrop"
-include ':wheelview'
+include ':app',"jiaozivideoplayer","picture_library","ucrop","netlib"

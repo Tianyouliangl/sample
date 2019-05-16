@@ -6,11 +6,13 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.flb.sample.BaseActivity;
+import com.flb.sample.BaseApplication;
 import com.flb.sample.R;
 import com.flb.sample.common.DBHelper;
 import com.flb.sample.model.AlarmClockBean;
@@ -44,13 +46,18 @@ public class ClockRemindActivity extends BaseActivity implements View.OnClickLis
         startAlarm();
     }
 
+    @Override
+    protected void onResume() {
+        BaseApplication.Companion.setRemindVisible(true);
+        super.onResume();
+    }
 
     private void startAlarm() {
         if (bean != null) {
             time.setText(bean.getTime());
             if (bean.getIsShake().equals("1")) {
                 vibrator = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
-                long[] patter = {1000, 500, 1000, 500};
+                long[] patter = {2000, 100, 2500, 100};
                 vibrator.vibrate(patter, 0);
             }
         }
@@ -83,24 +90,30 @@ public class ClockRemindActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         if (v.getId() == R.id.btn_close){
             updateData();
-            finish();
         }
         if (v.getId() == R.id.btn_later_on){
             updateData("0");
-            finish();
         }
     }
 
     private void updateData() {
         if (bean != null){
             bean.setIsCommit("1");
-            DBHelper.update(bean,bean.getTime());
+            int update = DBHelper.update(bean, bean.getTime());
+            if (update != 0){
+                finish();
+            }
+            Log.e("fzw","-----是否修改成功----" + update);
         }
     }
     private void updateData(String open) {
         if (bean != null){
             bean.setOpen(open);
-            DBHelper.update(bean,bean.getTime());
+            int update = DBHelper.update(bean, bean.getTime());
+            if (update != 0){
+                finish();
+            }
+            Log.e("fzw","-----是否修改成功----" + update);
         }
     }
 
@@ -114,6 +127,7 @@ public class ClockRemindActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void onDestroy() {
+        BaseApplication.Companion.setRemindVisible(false);
         closeAll();
         super.onDestroy();
     }

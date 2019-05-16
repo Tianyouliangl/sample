@@ -10,9 +10,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/jiaozivideoplayer" />
+            <option value="$PROJECT_DIR$/netlib" />
             <option value="$PROJECT_DIR$/picture_library" />
             <option value="$PROJECT_DIR$/ucrop" />
-            <option value="$PROJECT_DIR$/wheelview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

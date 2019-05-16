@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sample</string>
+    <string name="retract">收起</string>
+    <string name="spread">展开</string>
 </resources>

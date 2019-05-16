@@ -1,22 +1,20 @@
 package com.flb.sample.widgets;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
+import com.flb.sample.BaseApplication;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,6 +25,12 @@ import java.util.List;
  * date : 2019/4/18
  */
 public class FileUtils {
+
+    protected static final String TAG = FileUtils.class.getSimpleName();
+    private static Context context = BaseApplication.Companion.getContext();
+
+    private final static String ENCODE = "UTF-8";
+
     private FileUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
@@ -1057,5 +1061,11 @@ public class FileUtils {
                 outputStream.close();
             }
         }
+    }
+
+
+
+    public static String getFileMd5(String path){
+        return "";
     }
 }

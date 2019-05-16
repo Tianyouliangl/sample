@@ -49,7 +49,11 @@ public class StatusLayoutManagerActivity extends BaseActivity implements OnStatu
                 }
                 mList = new ArrayList<>();
                 for (int i=0 ; i< 10 ; i++){
-                    mList.add("StatusLayoutManager");
+                    mList.add("咱也不知道,咱也不敢问!(给老子问^.^)/咱也不知道,咱也不敢问!(给老子问^.^)/" +
+                            "咱也不知道,咱也不敢问!(给老子问^.^)/咱也不知道,咱也不敢问!(给老子问^.^)/" +
+                            "咱也不知道,咱也不敢问!(给老子问^.^)/咱也不知道,咱也不敢问!(给老子问^.^)/"+
+                            "咱也不知道,咱也不敢问!(给老子问^.^)/咱也不知道,咱也不敢问!(给老子问^.^)/" +
+                            "咱也不知道,咱也不敢问!(给老子问^.^)/咱也不知道,咱也不敢问!(给老子问^.^)/");
                 }
                 setAdapter();
             }

@@ -8,6 +8,8 @@ public class Constant {
 
     public static class type{
 
+        public static final String HTTP_HOST = "http://62.234.173.137:8100/app/";
+
         // 数据库表名
         public static final String TABLE_NAME = "AlarmClockData";
         // 数据库版本号

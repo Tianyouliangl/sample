@@ -44,6 +44,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             public void onClick(View v) {
                 if (mListener != null){
                     mListener.onClickItem(position);
+
                 }
             }
         });

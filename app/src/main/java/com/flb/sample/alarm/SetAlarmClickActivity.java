@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -23,7 +25,7 @@ import com.flb.sample.widgets.loopView.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetAlarmClickActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class SetAlarmClickActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
 
     private ImageView cancel_clock;
@@ -36,8 +38,6 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
     private static String BEAN = "bean";
     private String sp_h;
     private String sp_m;
-    private String selectH;
-    private String selectM;
     private String selectType = "1";
     private String selectDelete = "0";
     private String selectShake = "1";
@@ -54,6 +54,7 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
     private View lin_delete;
     private EditText ed_clock_remark;
     private ImageView iv_shake;
+    private CheckBox rb_btn_h;
 
     public static void Intent(Context conn,Boolean b,AlarmClockBean bean){
         Intent intent = new Intent(conn, SetAlarmClickActivity.class);
@@ -84,16 +85,20 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
         lin_delete = findViewById(R.id.lin_delete);
         ed_clock_remark = findViewById(R.id.ed_clock_remark);
         iv_shake = findViewById(R.id.iv_shake);
+        rb_btn_h = findViewById(R.id.rb_btn_h);
     }
 
     @Override
     public void initData() {
+        loop_h.setTextSize(20);
+        loop_m.setTextSize(18);
         cancel_clock.setOnClickListener(this);
         save_clock.setOnClickListener(this);
         btn_delete_clock.setOnClickListener(this);
         rg_group.setOnCheckedChangeListener(this);
         iv_delete.setOnClickListener(this);
         iv_shake.setOnClickListener(this);
+        rb_btn_h.setOnCheckedChangeListener(this);
         setData();
         initEvent();
     }
@@ -167,13 +172,11 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
         for (int i = 0; i< list_h.size(); i++){
             if (save){
                 if (list_h.get(i).equals(getH())){
-                    selectH = getH();
                     loop_h.setCurrentPosition(i);
                 }
             }
             if (!save){
                 if (list_h.get(i).equals(sp_h)){
-                    selectH = sp_h;
                     loop_h.setCurrentPosition(i);
                 }
             }
@@ -183,13 +186,11 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
         for (int i = 0; i< list_m.size(); i++){
             if (save){
                 if (list_m.get(i).equals(getM())){
-                    selectM = getM();
                     loop_m.setCurrentPosition(i);
                 }
             }
             if (!save){
                 if (list_m.get(i).equals(sp_m)){
-                    selectM = sp_m;
                     loop_m.setCurrentPosition(i);
                 }
             }
@@ -204,15 +205,10 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
         //滚动监听
         loop_h.setListener(new OnItemSelectedListener() {
             public void onItemSelected(int index) {
-                selectH = list_h.get(index);
+                changeSelectorHour(list_h.get(index),rb_btn_h.isChecked());
             }
         });
 
-        loop_m.setListener(new OnItemSelectedListener() {
-            public void onItemSelected(int index) {
-                selectM = list_m.get(index);
-            }
-        });
     }
 
     /**
@@ -248,12 +244,12 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        String sumTime = list_h.get(loop_h.getSelectedItem()) + ":" + list_m.get(loop_m.getSelectedItem());
         if (v.getId() == R.id.iv_cancel_clock){
             if (save){
                 finish();
             }
             if (!save){
-                String sumTime = selectH + ":" + selectM;
                 String ed_name = ed_clock_name.getText().toString();
                 String re = ed_clock_remark.getText().toString();
                 if (!sumTime.equals(historyBean.getTime()) ||
@@ -269,7 +265,6 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
             }
         }
         if (v.getId() == R.id.iv_save_clock){
-            String sumTime = selectH + ":" + selectM;
             if (!selectType.equals("2")){ // 响完即删仅限于 方式为一次!
                 selectDelete = "0";
             }
@@ -278,7 +273,8 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
                 if (name.isEmpty()){
                     name = "闹钟" +(DBHelper.getClockDataAll().size() + 1);
                 }
-                 saveAlarmClock(name,sumTime,selectType,selectDelete,ed_clock_remark.getText().toString(),"1",selectShake);
+                AlarmClockBean clockBean = getAlarmClockBean(name, sumTime, selectType, selectDelete, ed_clock_remark.getText().toString(), "1", selectShake);
+                saveAlarmClock(name,sumTime,selectType,selectDelete,ed_clock_remark.getText().toString(),"1",selectShake);
                  finish();
 
 
@@ -363,4 +359,52 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
             lin_delete.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        changeSelectorHour(list_h.get(loop_h.getSelectedItem()),isChecked);
+    }
+
+    void changeSelectorHour(String h,Boolean isOpen){
+        String time = getH();
+        int v ;
+        Integer value = Integer.valueOf(getH());
+        if (isOpen){
+            if (getH().length() < 2){
+                time = "0"+ getH();
+            }
+            if (h.equals(time)){
+                v =  value + 2;
+                if (v > 24){
+                    v = v-24;
+                }
+                String v2= String.valueOf(v);
+                if (v2.length() < 2){
+                    v2 = "0"+v2;
+                }
+                for (int i=0;i<list_h.size();i++){
+                    if (list_h.get(i).equals(v2)){
+                        loop_h.setCurrentPosition(i);
+                    }
+                }
+            }else {
+                if ((Integer.valueOf(h) - value) < 2){
+                    v =  value + 2;
+                    if (v > 24){
+                        v = v-24;
+                    }
+                    String v2= String.valueOf(v);
+                    if (v2.length() < 2){
+                        v2 = "0"+v2;
+                    }
+                    for (int i=0;i<list_h.size();i++){
+                        if (list_h.get(i).equals(v2)){
+                            loop_h.setCurrentPosition(i);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

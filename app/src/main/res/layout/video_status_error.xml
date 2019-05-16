@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/imaginary_line"
+        android:layout_height="300dp">
+        <TextView
+            android:id="@+id/uploadVideoFailure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传失败 ! "
+            android:textSize="18sp"
+            android:textColor="#ff00"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/tvUploadAgain"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/tvUploadAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="重新上传"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:textColor="@color/blue"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+
+
+</FrameLayout>

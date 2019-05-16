@@ -43,6 +43,16 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_height="50dp" />
+
+                <CheckBox
+                    android:id="@+id/rb_btn_h"
+                    android:text="最少两小时之后提醒"
+                    android:textColor="@color/blue"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </RelativeLayout>
 
             <RelativeLayout
