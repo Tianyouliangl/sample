@@ -13,7 +13,9 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.access_wifi_state" />
+    <uses-permission android:name="android.permission.access_network_state" />
 
     <application
         android:name=".BaseApplication"
@@ -45,7 +47,23 @@
 
         <service android:name=".service.AlarmClockService" />
 
-        <activity android:name=".alarm.ClockRemindActivity" android:theme="@style/dialog_style"></activity>
+        <activity
+            android:name=".alarm.ClockRemindActivity"
+            android:theme="@style/dialog_style" />
+
+        <receiver android:name=".roadcastReceiver.NetworkConnectChangedReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".imageprogress.ImageProgressActivity"></activity>
+
+        <meta-data
+            android:name="com.flb.sample.imageprogress.replace.MyGlideModule"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

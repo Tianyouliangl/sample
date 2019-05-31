@@ -28,10 +28,7 @@ import me.bakumon.statuslayoutmanager.library.StatusLayoutManager;
  */
 public class FileFragment extends BaseLazyFragment{
 
-    private RecyclerView file_rl;
-    private LinearLayoutManager layoutManager;
-    private StatusLayoutManager statusLayoutManager;
-    private LinearLayout file_ll;
+    private TextView tv_file_hint;
 
     @Override
     protected int setContentView() {
@@ -40,21 +37,13 @@ public class FileFragment extends BaseLazyFragment{
 
     @Override
     protected void init(View view) {
-        Log.i("fzw","----initView---" );
-        file_rl = view.findViewById(R.id.file_rl);
-        file_ll = view.findViewById(R.id.file_ll);
-        statusLayoutManager = new StatusLayoutManager.Builder(file_ll).build();
-        layoutManager = new LinearLayoutManager(getContext());
-        file_rl.setLayoutManager(layoutManager);
-        statusLayoutManager.showCustomLayout(R.layout.item_status_loading);
+        tv_file_hint = view.findViewById(R.id.tv_file_hint);
     }
 
     @Override
     protected void lazyLoad() {
-        Log.i("fzw","----initData---");
         String type = getArguments().getString("type");
-        ArrayList<Map<String, String>> fileAsType = QueryFileUtils.getFileAsType(type);
-
+        tv_file_hint.setText(type);
     }
 
 

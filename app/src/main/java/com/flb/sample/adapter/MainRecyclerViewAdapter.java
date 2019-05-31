@@ -2,12 +2,16 @@ package com.flb.sample.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flb.sample.R;
+import com.flb.sample.widgets.SwipeItemLayout;
 
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     public interface onClickItem{
        void   onClickItem(int position);
+       void   onDelete(int position);
     }
 
     public MainRecyclerViewAdapter(Context mContext, List<String> mList) {
@@ -39,12 +44,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @Override
     public void onBindViewHolder(MainRecyclerViewHolder holder, final int position) {
         holder.tv_title.setText(mList.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null){
                     mListener.onClickItem(position);
-
+                }
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null){
+                    mListener.onDelete(position);
                 }
             }
         });
@@ -58,10 +70,16 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     class MainRecyclerViewHolder extends  RecyclerView.ViewHolder{
 
         public TextView tv_title;
+        public Button delete;
+        public RelativeLayout main;
+        public SwipeItemLayout sw_item;
 
         public MainRecyclerViewHolder(View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_title);
+            delete = itemView.findViewById(R.id.delete);
+            main = itemView.findViewById(R.id.main);
+            sw_item = itemView.findViewById(R.id.sw_item);
         }
     }
     public void setOnClickItemListener(onClickItem item){

@@ -104,7 +104,7 @@ public class AlarmClockActivity extends BaseActivity implements View.OnClickList
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     //申请的权限全部允许
-                    SetAlarmClickActivity.Intent(getBaseContext(),false,bean);
+                    SetAlarmClickActivity.Intent(AlarmClockActivity.this,false,bean);
                 } else {
                     //只要有一个权限被拒绝，就会执行
                     Toast.makeText(AlarmClockActivity.this, "未授权权限，部分功能不能使用", Toast.LENGTH_SHORT).show();

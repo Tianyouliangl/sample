@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,13 +14,35 @@
 
         <ProgressBar
             android:id="@+id/up_pb"
-            android:layout_width="30dp"
+            android:layout_width="55dp"
             android:layout_gravity="center"
-            android:layout_height="30dp"
+            android:layout_height="55dp"
             android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/mTvProgress"
+            android:text="0%"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
+
+    <uk.co.barbuzz.beerprogressview.BeerProgressView
+        android:id="@+id/beerProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:beerColor="#800066cc"
+        app:bubbleColor="#80FFFFFF"
+        android:visibility="gone"
+        app:bubbleCount="12"
+        app:waveMax="100"
+        app:waveAmplitude="3dp"/>
 
 
 

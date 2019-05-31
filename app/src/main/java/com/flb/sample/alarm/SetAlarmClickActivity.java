@@ -60,6 +60,7 @@ public class SetAlarmClickActivity extends BaseActivity implements View.OnClickL
         Intent intent = new Intent(conn, SetAlarmClickActivity.class);
         intent.putExtra(SAVE,b);
         intent.putExtra(BEAN,bean);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         conn.startActivity(intent);
     }
 

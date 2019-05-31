@@ -18,7 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract int getContentView() ;
 
-
     public abstract void initView();
 
     public abstract void initData();

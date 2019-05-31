@@ -16,11 +16,11 @@ import java.util.List;
  * author : 冯张伟
  * date : 2019/4/19
  */
-public class TablayoutAdapter extends FragmentPagerAdapter{
+public class TabLayoutAdapter extends FragmentPagerAdapter{
 
     private List<String> mList;
 
-    public TablayoutAdapter(FragmentManager fm, List<String> list) {
+    public TabLayoutAdapter(FragmentManager fm, List<String> list) {
         super(fm);
         this.mList = list;
     }
@@ -37,11 +37,5 @@ public class TablayoutAdapter extends FragmentPagerAdapter{
     @Override
     public int getCount() {
         return mList.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mList.get(position);
     }
 }

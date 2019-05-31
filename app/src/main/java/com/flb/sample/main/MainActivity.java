@@ -13,9 +13,11 @@ import com.flb.sample.alarm.AlarmClockActivity;
 import com.flb.sample.douyin.DouYinActivity;
 import com.flb.sample.dynamic.DynamicActivity;
 import com.flb.sample.file.FileActivity;
+import com.flb.sample.imageprogress.ImageProgressActivity;
 import com.flb.sample.keyBoard.KeyBoardActivity;
 import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
+import com.flb.sample.widgets.SwipeItemLayout;
 import com.flb.sample.zXing.ZXingActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -46,16 +48,34 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("ThinkChange");
         mList.add("仿抖音上下滑动");
         mList.add("上传图片(多张)");
-        mList.add("查看本地文件");
+        mList.add("自定义TabLayout");
         mList.add("闹钟");
+        mList.add("图片加载进度");
         setAdapter();
     }
 
     @Override
     public void initView() {
+        createPermissions();
         mRecyclerView = findViewById(R.id.sample_rv);
         mLayoutManage = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManage);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+    }
+
+    private void createPermissions() {
+            RxPermissions rxPermissions = new RxPermissions(this);
+                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+
+                        } else {
+                            //只要有一个权限被拒绝，就会执行
+                            finish();
+                        }
+                    }
+                });
     }
 
     private void setAdapter() {
@@ -98,29 +118,27 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 startActivity(mIntent);
                 break;
             case 6:
-                RxPermissions rxPermissions = new RxPermissions(this);
-                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            //申请的权限全部允许
-                            mIntent = new Intent(MainActivity.this, FileActivity.class);
-                            startActivity(mIntent);
-                        } else {
-                            //只要有一个权限被拒绝，就会执行
-                            Toast.makeText(MainActivity.this, "未授权权限，部分功能不能使用", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                mIntent = new Intent(MainActivity.this, FileActivity.class);
+                startActivity(mIntent);
                 break;
             case 7:
                 mIntent = new Intent(this, AlarmClockActivity.class);
+                startActivity(mIntent);
+                break;
+            case 8:
+                mIntent = new Intent(this, ImageProgressActivity.class);
                 startActivity(mIntent);
                 break;
             default:
                 break;
         }
 
+    }
+
+    @Override
+    public void onDelete(int position) {
+        mList.remove(position);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

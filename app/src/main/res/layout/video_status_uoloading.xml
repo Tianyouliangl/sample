@@ -17,7 +17,8 @@
         app:waveAmplitude="3dp"/>
 
     <TextView
-        android:text="50%"
+        android:id="@+id/mTvProgress"
+        android:text="0%"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:layout_gravity="center"

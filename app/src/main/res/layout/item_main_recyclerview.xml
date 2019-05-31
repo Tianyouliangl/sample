@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.flb.sample.widgets.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:id="@+id/sw_item"
+    android:layout_height="60dp">
 
    <RelativeLayout
+       android:id="@+id/main"
        android:layout_width="match_parent"
        android:minHeight="60dp"
-       android:layout_height="wrap_content">
+       android:layout_height="match_parent">
 
        <ImageView
            android:id="@+id/iv_manage"
@@ -47,4 +49,25 @@
 
    </RelativeLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:background="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/delete"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/shape_delete"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</com.flb.sample.widgets.SwipeItemLayout>

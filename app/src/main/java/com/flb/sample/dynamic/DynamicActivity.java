@@ -12,10 +12,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,17 +28,14 @@ import android.widget.Toast;
 import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.DynamicAdapter;
-import com.flb.sample.model.FileUploadJson;
-import com.flb.sample.widgets.CmRequestBody;
 import com.flb.sample.widgets.DisplayChildGridView;
 import com.flb.sample.widgets.FileUtils;
-import com.google.gson.Gson;
+import com.flb.sample.widgets.UpLoadingFileManager;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,16 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-public class DynamicActivity extends BaseActivity implements DynamicAdapter.onItemInterface, Callback, View.OnClickListener {
+public class DynamicActivity extends BaseActivity implements DynamicAdapter.onItemInterface,View.OnClickListener,UpLoadingFileManager.CallBack {
 
     private DisplayChildGridView mGridView;
     private List<String> mList;
@@ -64,15 +57,13 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
     private TextView tv_hint;
     private Button btn_save_bitmap;
     private ScrollView mScrollView;
+    private AlertDialog cutDialog;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int w = msg.what;
-            String m = (String) msg.obj;
-            int current = msg.arg1;
-            int total = msg.arg2;
-            tv_hint.setText(m);
+
             switch (w){
                 case 1:
                     tv_hint.setText("上传失败 !_!");
@@ -80,10 +71,13 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
                     mHandler.sendEmptyMessageDelayed(4,500);
                     break;
                 case 2:
+                   String m = (String) msg.obj;
+                   tv_hint.setText(m);
                     tv_progress.setText(100+"%");
                     mHandler.sendEmptyMessageDelayed(4,500);
                     break;
                 case 3:
+                    int current = msg.arg1;
                     tv_progress.setText(current+"%");
                     break;
                 case 4:
@@ -105,11 +99,42 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
                             + picFile)));
                     Toast.makeText(DynamicActivity.this, "图片保存图库成功", Toast.LENGTH_LONG).show();
                     break;
+                case 6:
+                    Bitmap bit = (Bitmap) msg.obj;
+                    showSrceenDialog(bit);
+                    break;
+                case 7:
+                    if (cutDialog != null && cutDialog.isShowing()){
+                        cutDialog.dismiss();
+                    }
+                    break;
                default:
                    break;
             }
         }
     };
+
+
+    private void showSrceenDialog(Bitmap bit) {
+        cutDialog = new AlertDialog.Builder(this).create();
+        View dialogView = View.inflate(this, R.layout.show_cut_screen_layout, null);
+        ImageView showImg = (ImageView) dialogView.findViewById(R.id.iv_screen);
+        showImg.setImageBitmap(bit);
+        cutDialog.setView(dialogView);
+        Window window = cutDialog.getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        WindowManager m = window.getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = window.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() *1.0); // 高度设置为屏幕的0.6
+        p.width = (int)(d.getWidth()*0.8);
+        p.gravity = Gravity.CENTER;//设置弹出框位置
+        window.setAttributes(p);
+        window.setWindowAnimations(R.style.dialogWindowAnim);
+        cutDialog.show();
+        mHandler.sendEmptyMessageDelayed(7,800);
+    }
+
     private Button btn_video;
 
     private void updateAdapter() {
@@ -191,9 +216,7 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
                             e.printStackTrace();
                         }
                     }
-
-                    uploadImage(list);
-
+                    new UpLoadingFileManager().UpLoadingFileImage(list,this);
                     break;
 
             }
@@ -204,71 +227,6 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
         }
     }
 
-
-    //1.创建对应的MediaType
-    private    MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
-    private   OkHttpClient client = new OkHttpClient();
-
-    public  void uploadImage(List<Bitmap> imageList){
-
-        //3.构建MultipartBody
-        MultipartBody.Builder requestBody = new MultipartBody.Builder();//构建者模式
-        requestBody.addFormDataPart("fileType", "1");
-        requestBody.addFormDataPart("fileExtName", "jpg");
-
-        for (int i=0;i<imageList.size();i++){
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            imageList.get(i).compress(Bitmap.CompressFormat.JPEG,80,outputStream);
-            byte[] byteArray = outputStream.toByteArray();
-            //2.创建RequestBody
-            RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, byteArray);
-            requestBody.addFormDataPart("file","image",fileBody);
-        }
-        CmRequestBody cmBody = new CmRequestBody(requestBody.build()) {
-
-            @Override
-            public void loading(long current, long total, boolean done) {
-                Log.i("fzw","上传进度---" + current + "/" + total);
-                sendMessage(3,current,total," 正在上传... ");
-            }
-        };
-
-        //4.构建请求
-        Request request = new Request.Builder()
-                .url("http://xkadmin.xinyixy.com/sys/attach/appFiles")
-                .post(cmBody)
-                .build();
-
-        //5.发送请求
-        Call response = client.newCall(request);
-        response.enqueue(this);
-    }
-
-    @Override
-    public void onFailure(Call call, IOException e) {
-        Log.i("fzw","----image-----" + e.toString());
-        sendMessage(1,0,0,"上传失败 !-! ");
-    }
-
-    @Override
-    public void onResponse(Call call, Response response) throws IOException {
-
-        if (response.isSuccessful() || response != null || response.body() != null){
-            String json = response.body().string();
-            sendMessage(2,0,0,"上传完成 ^!^ ");
-            Log.i("fzw","----json-----" + json);
-            FileUploadJson uploadJson = new Gson().fromJson(json, FileUploadJson.class);
-            List<FileUploadJson.ContentBean.ListBean> listBeanList = uploadJson.getContent().getList();
-            for (int i=0;i< listBeanList.size();i++){
-                mList.add(listBeanList.get(i).getUrl());
-                Log.i("fzw","----image-----" + listBeanList.get(i).getUrl());
-            }
-        }else {
-            sendMessage(1,0,0,"上传出错 !-! ");
-        }
-
-
-    }
 
     public void sendMessage(int what, long current, long total, String msg) {
         Message message = Message.obtain();
@@ -317,6 +275,10 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
                     msg.what = 5;
                     msg.obj = newFile.getPath();
                     mHandler.sendMessage(msg);
+                    Message bit = Message.obtain();
+                    bit.what = 6;
+                    bit.obj = bitmap;
+                    mHandler.sendMessage(bit);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -337,6 +299,23 @@ public class DynamicActivity extends BaseActivity implements DynamicAdapter.onIt
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
         return bitmap;
+    }
+
+
+    @Override
+    public void onProgressBar(long p) {
+        sendMessage(3,p,100," 正在上传... ");
+    }
+
+    @Override
+    public void onError(String msg) {
+        sendMessage(1,0,0,msg);
+    }
+
+    @Override
+    public void onSuccess(List<String> list) {
+        mList.addAll(list);
+        sendMessage(2,0,0,"上传完成 ^!^ ");
     }
 
 
