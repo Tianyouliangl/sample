@@ -32,11 +32,9 @@ public class FileActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @Override
     public void initData() {
-        mList.add(Constant.type.FILE_ALL);
-        mList.add(Constant.type.FILE_IMAGE);
-        mList.add(Constant.type.FILE_MUSIC);
-        mList.add(Constant.type.FILE_VIDOE);
-        mList.add(Constant.type.FILE_RESTS);
+        mList.add(Constant.type.DATE_QI);
+        mList.add(Constant.type.DATE_SHIWU);
+        mList.add(Constant.type.DATE_SANSHI);
         tabAdapter = new TabLayoutAdapter(getSupportFragmentManager(),mList);
         file_vp.setAdapter(tabAdapter);
         file_vp.setCurrentItem(0);
