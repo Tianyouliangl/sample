@@ -59,11 +59,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".imageprogress.ImageProgressActivity"></activity>
+        <activity android:name=".imageprogress.ImageProgressActivity" />
 
         <meta-data
             android:name="com.flb.sample.imageprogress.replace.MyGlideModule"
             android:value="GlideModule" />
+
+        <activity android:name=".bezierCurve.BezierCurveActivity" />
+        <activity android:name=".suspend.SuspendActivity" />
+        <activity android:name=".gallery.GalleryActivity"></activity>
     </application>
 
 </manifest>

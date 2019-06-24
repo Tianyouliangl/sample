@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.flb.sample.widgets.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:id="@+id/sw_item"
     android:layout_height="60dp">
 
    <RelativeLayout
@@ -52,6 +51,7 @@
     <LinearLayout
         android:background="@color/colorBlack"
         android:layout_width="wrap_content"
+        android:orientation="horizontal"
         android:layout_height="match_parent">
 
         <Button

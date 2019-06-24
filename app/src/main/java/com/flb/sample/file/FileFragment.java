@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * author : 冯张伟
@@ -48,19 +47,24 @@ public class FileFragment extends BaseLazyFragment{
 
     @Override
     protected void lazyLoad() {
+
         String type = getArguments().getString("type");
+
         if (type.equals(Constant.type.DATE_QI)){
             charDataSize = 7;
             chartXCount = 7;
         }
+
         if (type.equals(Constant.type.DATE_SHIWU)){
             charDataSize = 15;
             chartXCount = 5;
         }
+
         if (type.equals(Constant.type.DATE_SANSHI)){
             charDataSize = 30;
             chartXCount = 5;
         }
+
         chart.animateX(1000, Easing.EasingOption.EaseInOutQuart);
         ChartBean json = gson.fromJson(Constant.type.json_chart, ChartBean.class);
         List<ChartBean.ThirtyDayBean> chartList = json.getThirtyDay();
@@ -69,12 +73,14 @@ public class FileFragment extends BaseLazyFragment{
         for (int i = 0; i < charDataSize; i++) {
             entries.add(new Entry(i,chartList.get(i).getReadCnt()));
         }
+
         //设置样式
         YAxis rightAxis = chart.getAxisRight();
 
         //设置图表右边的y轴禁用
         rightAxis.setEnabled(false);
         YAxis leftAxis = chart.getAxisLeft();
+
         //设置图表左边的y轴禁用
         leftAxis.setDrawGridLines(false);
         leftAxis.setEnabled(true);

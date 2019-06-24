@@ -19,15 +19,17 @@ import java.util.List;
  * author : 冯张伟
  * date : On{DATE}
  */
-public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainRecyclerViewHolder>{
+public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainRecyclerViewHolder> {
 
     private Context mContext;
     private List<String> mList;
     private onClickItem mListener;
 
-    public interface onClickItem{
-       void   onClickItem(int position);
-       void   onDelete(int position);
+    public interface onClickItem {
+
+        void onClickItem(int position);
+
+        void onDelete(int position);
     }
 
     public MainRecyclerViewAdapter(Context mContext, List<String> mList) {
@@ -47,7 +49,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         holder.main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null){
+                if (mListener != null) {
                     mListener.onClickItem(position);
                 }
             }
@@ -55,7 +57,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null){
+                if (mListener != null) {
                     mListener.onDelete(position);
                 }
             }
@@ -67,22 +69,21 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         return mList.size();
     }
 
-    class MainRecyclerViewHolder extends  RecyclerView.ViewHolder{
+    class MainRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_title;
         public Button delete;
         public RelativeLayout main;
-        public SwipeItemLayout sw_item;
 
         public MainRecyclerViewHolder(View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_title);
             delete = itemView.findViewById(R.id.delete);
             main = itemView.findViewById(R.id.main);
-            sw_item = itemView.findViewById(R.id.sw_item);
         }
     }
-    public void setOnClickItemListener(onClickItem item){
-         mListener = item;
+
+    public void setOnClickItemListener(onClickItem item) {
+        mListener = item;
     }
 }

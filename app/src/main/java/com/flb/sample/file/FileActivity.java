@@ -82,9 +82,9 @@ public class FileActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @Override
     public void onPageScrollStateChanged(int state) {
-//        state ==1的时辰默示正在滑动，
-//        state==2的时辰默示滑动完毕了，
-//        state==0的时辰默示什么都没做.
+//        state ==1的时候默示正在滑动，
+//        state==2的时候默示滑动完毕了，
+//        state==0的时候默示什么都没做.
 //            switch (state){
 //                case 1:
 //                    for (int i=0 ;i < tabAdapter.getCount() ; i++) {

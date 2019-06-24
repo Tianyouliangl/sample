@@ -10,13 +10,16 @@ import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.alarm.AlarmClockActivity;
+import com.flb.sample.bezierCurve.BezierCurveActivity;
 import com.flb.sample.douyin.DouYinActivity;
 import com.flb.sample.dynamic.DynamicActivity;
 import com.flb.sample.file.FileActivity;
+import com.flb.sample.gallery.GalleryActivity;
 import com.flb.sample.imageprogress.ImageProgressActivity;
 import com.flb.sample.keyBoard.KeyBoardActivity;
 import com.flb.sample.securityCode.SecurityCodeActivity;
 import com.flb.sample.statusLayoutManager.StatusLayoutManagerActivity;
+import com.flb.sample.suspend.SuspendActivity;
 import com.flb.sample.widgets.SwipeItemLayout;
 import com.flb.sample.zXing.ZXingActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -50,7 +53,10 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("上传图片(多张)");
         mList.add("自定义TabLayout");
         mList.add("闹钟");
-        mList.add("图片加载进度");
+        mList.add("图片加载进度(没写完)");
+        mList.add("贝塞尔曲线");
+        mList.add("悬浮(根布局)");
+        mList.add("RecyclerView(画廊效果)");
         setAdapter();
     }
 
@@ -127,6 +133,18 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 break;
             case 8:
                 mIntent = new Intent(this, ImageProgressActivity.class);
+                startActivity(mIntent);
+                break;
+            case 9:
+                mIntent = new Intent(this, BezierCurveActivity.class);
+                startActivity(mIntent);
+                break;
+            case 10:
+                mIntent = new Intent(this, SuspendActivity.class);
+                startActivity(mIntent);
+                break;
+            case 11:
+                mIntent = new Intent(this, GalleryActivity.class);
                 startActivity(mIntent);
                 break;
             default:

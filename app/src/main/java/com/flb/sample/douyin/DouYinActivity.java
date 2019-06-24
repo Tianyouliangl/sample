@@ -37,12 +37,6 @@ public class DouYinActivity extends BaseActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE://停止滚动
-//                        View view = snapHelper.findSnapView(layoutManager);
-//                        JZVideoPlayer.releaseAllVideos();
-//                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-//                        if (viewHolder != null && viewHolder instanceof VideoAdapter.VideoHolder) {
-//                            ((VideoAdapter.VideoHolder) viewHolder).mSurfaceView.startVideo();
-//                        }
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING://拖动
                         break;
