@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="30dp"
             android:src="@drawable/picture_back"
             android:layout_marginLeft="8dp"
@@ -26,33 +27,39 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/sv"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:background="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="-36dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/shape_suspend_bg"
-                android:layout_height="72dp"></LinearLayout>
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:padding="3dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:text="灰色天空中，只有信仰发出微弱的星点，嘴角的笑容随之逝去，“这不是我想要的结果。”我喃喃的说道。我咽喉中的苦涩难以散去，眼眶泪点不停落下，沉痛的心情难以释怀！
+
+                <ImageView
+                    android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="-36dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shape_suspend_bg"
+                    android:layout_height="72dp">
+                </LinearLayout>
+
+                <TextView
+                    android:padding="3dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:text="灰色天空中，只有信仰发出微弱的星点，嘴角的笑容随之逝去，“这不是我想要的结果。”我喃喃的说道。我咽喉中的苦涩难以散去，眼眶泪点不停落下，沉痛的心情难以释怀！
 
 我漫游在街头，陪伴我的只有泛黄的树叶。我驻足在热闹的广场，望人群，听寒暄，思痛楚。这将是我心灵的一抹残缺。闭上眼，浴阳光的炎热，任它去灼烧，任它那光芒刺眼。
 
@@ -204,12 +211,36 @@
 前者的人有很多，几乎一百个里面九十九个都属于前者，后者也有很多，画家科学家作家政治家军事家甚至明星，他们的魅力让前者迷醉，跟随，于是，他们虽然也是人，却引领着更多的人朝着他们的目标前赴后继．
 
 于是，他们掌握着成功，而后者，永远不知道自己身在何处．"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:id="@+id/linear_top"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:background="@drawable/shape_suspend_bg"
+            android:layout_height="72dp">
+
+            <TextView
+                android:text="哈哈,,真好玩!!"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+        </RelativeLayout>
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </FrameLayout>
+
+
 
 
 
