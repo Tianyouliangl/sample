@@ -10,6 +10,9 @@ import com.flb.sample.common.Constant
 import com.flb.sample.common.DBHelper
 import com.flb.sample.model.AlarmClockBean
 import com.flb.sample.widgets.LogUtil
+import com.tencent.cos.xml.CosXmlService
+import com.tencent.cos.xml.CosXmlServiceConfig
+import com.tencent.qcloud.core.auth.ShortTimeCredentialProvider
 import net.ljb.kt.HttpConfig
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -30,8 +33,19 @@ class BaseApplication : Application() {
 
         var context : Context ? = null
 
+        private  var cosXmlService: CosXmlService? = null
+
+        fun getCosXmlService () : CosXmlService{
+            return cosXmlService!!
+        }
+
+        val appId = "1258274484"
+
      }
 
+    val region = "ap-beijing"
+    val secretId = "AKIDDmMvYCB86zzyX5dG7xpt3ITaekpzlZPN" //永久密钥 secretId
+    val secretKey = "VvmgCGPqKmG727dC5W8nTDxjKyadkP7m" //永久密钥 secretKey
 
 
 
@@ -44,6 +58,7 @@ class BaseApplication : Application() {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
+        initCos()
         context = applicationContext
         val headers = mapOf<String, String>();
         val params = mapOf<String, String>()
@@ -63,17 +78,28 @@ class BaseApplication : Application() {
     fun onMessageEvent(bean: AlarmClockBean) {
         if (!remindVisible) {
             val commit = bean.getIsCommit()
-            Log.e("fzw", "----时间----" + bean.getTime() + "----是否提醒----" + bean.getIsCommit())
             if (commit == "0") {
                 val i = Intent(this, ClockRemindActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 i.putExtra("bean", bean)
                 startActivity(i)
-                Log.e("fzw", "----提醒----")
             }
         }
 
     }
 
+    fun initCos(){
+        val serviceConfig = CosXmlServiceConfig.Builder()
+                .setRegion(region)
+                .isHttps(true) // 使用 https 请求, 默认 http 请求
+                .setDebuggable(true)
+                .builder()
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         */
+        val credentialProvider = ShortTimeCredentialProvider(secretId,
+                secretKey, 300)
+        cosXmlService = CosXmlService(this, serviceConfig, credentialProvider)
+    }
 
 }

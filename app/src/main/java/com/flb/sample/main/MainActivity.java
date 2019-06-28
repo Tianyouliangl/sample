@@ -11,6 +11,7 @@ import com.flb.sample.R;
 import com.flb.sample.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.alarm.AlarmClockActivity;
 import com.flb.sample.bezierCurve.BezierCurveActivity;
+import com.flb.sample.cloudvideo.CloudVideoActivity;
 import com.flb.sample.douyin.DouYinActivity;
 import com.flb.sample.dynamic.DynamicActivity;
 import com.flb.sample.file.FileActivity;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("贝塞尔曲线");
         mList.add("悬浮(根布局)");
         mList.add("RecyclerView(画廊效果)");
+        mList.add("腾讯云视频Demo");
         setAdapter();
     }
 
@@ -145,6 +147,10 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
                 break;
             case 11:
                 mIntent = new Intent(this, GalleryActivity.class);
+                startActivity(mIntent);
+                break;
+            case 12:
+                mIntent = new Intent(this, CloudVideoActivity.class);
                 startActivity(mIntent);
                 break;
             default:

@@ -283,5 +283,18 @@ public class Constant {
     }
 
 
+    public static class Video{
+
+        public static final String PrivateKey = "-----BEGIN PRIVATE KEY-----\n" +
+                "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgSJXSAZGSe3VNL9gK\n" +
+                "Im4PViJhiPAS5cGgJsGDBFFgpaqhRANCAAR10X/1Jf4UXPgrbyjwUJVZlEs4x8wG\n" +
+                "wA/JuICKcM3KyKrulcXIOQiOkBoMJ0lCy4aehs41e5YlOnFSkgCynVeP\n" +
+                "-----END PRIVATE KEY-----\n";
+        public static final int SdkAppId  = 1400226057;
+
+
+    }
+
+
 
 }

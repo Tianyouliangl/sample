@@ -7,25 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".suspend.SuspendActivity">
 
-    <RelativeLayout
-        android:background="@color/blue"
-        android:layout_width="match_parent"
-        android:layout_height="55dp">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="30dp"
-            android:src="@drawable/picture_back"
-            android:layout_marginLeft="8dp"
-            android:layout_centerVertical="true"
-            android:layout_height="30dp" />
-        <TextView
-            android:text="Title"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+    <include layout="@layout/base_tobar"></include>
 
     <FrameLayout
         android:layout_width="match_parent"

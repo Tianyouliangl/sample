@@ -8,26 +8,30 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.flb.sample.BaseActivity;
 import com.flb.sample.R;
 
-public class SuspendActivity extends AppCompatActivity implements View.OnClickListener {
+public class SuspendActivity extends BaseActivity {
 
     private NestedScrollView sv;
     private RelativeLayout linear_top;
-    private ImageView iv_back;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suspend);
-        initView();
+    public int getContentView() {
+        return R.layout.activity_suspend;
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
+        initToolbar("悬浮",true);
         sv = findViewById(R.id.sv);
-        iv_back = findViewById(R.id.iv_back);
-        iv_back.setOnClickListener(this);
+
+    }
+    @Override
+    public void initData() {
         linear_top = findViewById(R.id.linear_top);
         sv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             int height = dip2px(this, 65);
@@ -43,12 +47,5 @@ public class SuspendActivity extends AppCompatActivity implements View.OnClickLi
     public  int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.iv_back){
-            finish();
-        }
     }
 }
