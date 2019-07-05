@@ -62,7 +62,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_height="160dp">
 
-                <com.flb.sample.widgets.loopView.LoopView
+                <com.flb.sample.fzw.widgets.loopView.LoopView
                     android:id="@+id/loop_h"
                     android:layout_width="100dp"
                     android:layout_marginTop="6dp"
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <com.flb.sample.widgets.loopView.LoopView
+                <com.flb.sample.fzw.widgets.loopView.LoopView
                     android:id="@+id/loop_m"
                     android:layout_width="100dp"
                     android:layout_marginTop="6dp"

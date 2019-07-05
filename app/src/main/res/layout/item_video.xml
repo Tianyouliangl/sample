@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <com.flb.sample.douyin.MyVideo
+   <com.flb.sample.fzw.douyin.MyVideo
        android:id="@+id/mSurfaceView"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
-   </com.flb.sample.douyin.MyVideo>
+   </com.flb.sample.fzw.douyin.MyVideo>
 
 
 </RelativeLayout>

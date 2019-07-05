@@ -62,7 +62,7 @@
                     android:hint="记录你此刻的想法."
                     android:layout_height="100dp" />
 
-                <com.flb.sample.widgets.DisplayChildGridView
+                <com.flb.sample.fzw.widgets.DisplayChildGridView
                     android:id="@+id/dis_gridView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                     android:fadeScrollbars="false"
                     android:scrollbars="none"
                     android:verticalSpacing="8dp">
-                </com.flb.sample.widgets.DisplayChildGridView>
+                </com.flb.sample.fzw.widgets.DisplayChildGridView>
 
             </LinearLayout>
 

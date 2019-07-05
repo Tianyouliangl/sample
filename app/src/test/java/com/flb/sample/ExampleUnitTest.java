@@ -1,4 +1,4 @@
-package com.flb.sample;
+package com.flb.sample.fzw;
 
 import org.junit.Test;
 

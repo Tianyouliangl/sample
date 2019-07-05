@@ -19,7 +19,7 @@
         android:layout_height="wrap_content" />
 
 
-    <com.flb.sample.widgets.VerificationCodeView
+    <com.flb.sample.fzw.widgets.VerificationCodeView
         android:id="@+id/view_verification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         app:vcv_et_number="4"
         app:vcv_et_text_color="@android:color/black"
         app:vcv_et_text_size="6sp">
-    </com.flb.sample.widgets.VerificationCodeView>
+    </com.flb.sample.fzw.widgets.VerificationCodeView>
 
     <Button
         android:id="@+id/btn_clear"

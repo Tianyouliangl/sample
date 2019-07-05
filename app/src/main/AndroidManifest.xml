@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.flb.sample">
+    package="com.flb.sample.fzw">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -56,7 +56,7 @@
         <activity android:name=".alarm.SetAlarmClickActivity" />
 
         <service android:name=".service.AlarmClockService" />
-
+        <service android:name=".service.FileDownService"/>
         <activity
             android:name=".alarm.ClockRemindActivity"
             android:theme="@style/dialog_style" />
@@ -72,7 +72,7 @@
         <activity android:name=".imageprogress.ImageProgressActivity" />
 
         <meta-data
-            android:name="com.flb.sample.imageprogress.replace.MyGlideModule"
+            android:name="com.flb.sample.fzw.imageprogress.replace.MyGlideModule"
             android:value="GlideModule" />
 
         <activity android:name=".bezierCurve.BezierCurveActivity" />

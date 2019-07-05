@@ -14,11 +14,11 @@
         android:layout_centerInParent="true"
         android:layout_marginRight="8dp"
         android:layout_height="300dp">
-        <com.flb.sample.douyin.MyVideo
+        <com.flb.sample.fzw.douyin.MyVideo
             android:id="@+id/custom_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </com.flb.sample.douyin.MyVideo>
+        </com.flb.sample.fzw.douyin.MyVideo>
     </RelativeLayout>
 
 

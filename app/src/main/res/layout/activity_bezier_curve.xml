@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".bezierCurve.BezierCurveActivity">
 
-    <com.flb.sample.widgets.CurveView
+    <com.flb.sample.fzw.widgets.CurveView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
