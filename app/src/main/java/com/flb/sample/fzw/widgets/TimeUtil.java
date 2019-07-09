@@ -1,5 +1,7 @@
 package com.flb.sample.fzw.widgets;
 
+import com.flb.sample.fzw.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +12,69 @@ import java.util.TimeZone;
  * date : 2019/5/10
  */
 public class TimeUtil {
+
+    public static int[] bgColor = {
+            R.drawable.shape_gray, // 0
+            R.drawable.shape_green,// 1
+            R.drawable.shape_azaury,// 2
+            R.drawable.shape_red,  // 3
+            R.drawable.shape_green,// 4
+            R.drawable.shape_azaury, // 5
+            R.drawable.shape_red,   // 6
+            R.drawable.shape_green, // 7
+            R.drawable.shape_azaury, // 8
+            R.drawable.shape_red, // 9
+            R.drawable.shape_green,// 10
+            R.drawable.shape_azaury, // 11
+            R.drawable.shape_red, // 12
+            R.drawable.shape_gray, // 13
+            R.drawable.shape_gray, // 14
+            R.drawable.shape_red, //15
+            R.drawable.shape_green,// 16
+            R.drawable.shape_azaury, //17
+            R.drawable.shape_red, // 18
+            R.drawable.shape_green, // 19
+            R.drawable.shape_azaury, //20
+            R.drawable.shape_red, // 21
+            R.drawable.shape_green, // 22
+            R.drawable.shape_azaury, //23
+            R.drawable.shape_red, // 24
+            R.drawable.shape_green, // 25
+            R.drawable.shape_azaury, // 26
+            R.drawable.shape_gray // 27
+    };
+
+    public static String[] bgColorName = {
+            "灰色", // 0
+            "绿色", // 1
+            "蓝色", // 2
+            "红色", // 3
+            "绿色", // 4
+            "蓝色", // 5
+            "红色", // 6
+            "绿色", // 7
+            "蓝色", // 8
+            "红色", // 9
+            "绿色", // 10
+            "蓝色", // 11
+            "红色", // 12
+            "灰色", // 13
+            "灰色", // 14
+            "红色", // 15
+            "绿色", // 16
+            "蓝色", // 17
+            "红色", // 18
+            "绿色", // 19
+            "蓝色", // 20
+            "红色", // 21
+            "绿色", // 22
+            "蓝色", // 23
+            "红色", // 24
+            "绿色", // 25
+            "蓝色", // 26
+            "灰色"  // 27
+    };
+
     /**
      * 获取当前时间的毫秒数
      */

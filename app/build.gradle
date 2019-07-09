@@ -86,6 +86,8 @@ dependencies {
     implementation 'uk.co.barbuzz:beerprogressview:0.0.6'
     implementation project(':netlib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //dialog
+    implementation 'com.superluo:dialog:1.0.1'
     //折现图
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     // 腾讯云视频

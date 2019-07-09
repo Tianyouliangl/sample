@@ -12,7 +12,7 @@ public class LogUtil {
      * @param isLogEnable 是否打印log
      */
     public static void init(boolean isLogEnable) {
-        Logger.init("LogHttpInfo")
+        Logger.init("Log")
                 .hideThreadInfo()
                 .logLevel(isLogEnable ? LogLevel.FULL : LogLevel.NONE)
                 .methodOffset(2);

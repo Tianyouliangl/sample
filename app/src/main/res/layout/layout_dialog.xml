@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_dialog"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="历史记录"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_below="@id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_dialog"
+            android:padding="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+        </android.support.v7.widget.RecyclerView>
+    </ScrollView>
+
+</RelativeLayout>

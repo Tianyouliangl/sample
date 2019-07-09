@@ -17,6 +17,7 @@ import com.flb.sample.fzw.dynamic.DynamicActivity;
 import com.flb.sample.fzw.file.FileActivity;
 import com.flb.sample.fzw.gallery.GalleryActivity;
 import com.flb.sample.fzw.imageprogress.ImageProgressActivity;
+import com.flb.sample.fzw.jND2B.JND2BActivity;
 import com.flb.sample.fzw.keyBoard.KeyBoardActivity;
 import com.flb.sample.fzw.securityCode.SecurityCodeActivity;
 import com.flb.sample.fzw.statusLayoutManager.StatusLayoutManagerActivity;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("悬浮(根布局)");
         mList.add("RecyclerView(画廊效果)");
         mList.add("腾讯云视频Demo");
+        mList.add("加拿大幸运2B");
         setAdapter();
     }
 
@@ -72,18 +74,18 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     }
 
     private void createPermissions() {
-            RxPermissions rxPermissions = new RxPermissions(this);
-                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
 
-                        } else {
-                            //只要有一个权限被拒绝，就会执行
-                            finish();
-                        }
-                    }
-                });
+                } else {
+                    //只要有一个权限被拒绝，就会执行
+                    finish();
+                }
+            }
+        });
     }
 
     private void setAdapter() {
@@ -102,57 +104,46 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
 
         switch (position) {
             case 0:
-                mIntent = new Intent(this, StatusLayoutManagerActivity.class);
-                startActivity(mIntent);
+                goActivity(StatusLayoutManagerActivity.class);
                 break;
             case 1:
-                mIntent = new Intent(this, SecurityCodeActivity.class);
-                startActivity(mIntent);
+                goActivity(SecurityCodeActivity.class);
                 break;
             case 2:
-                mIntent = new Intent(this, KeyBoardActivity.class);
-                startActivity(mIntent);
+                goActivity(KeyBoardActivity.class);
                 break;
             case 3:
-                mIntent = new Intent(this, ZXingActivity.class);
-                startActivity(mIntent);
+                goActivity(ZXingActivity.class);
                 break;
             case 4:
-                mIntent = new Intent(this, DouYinActivity.class);
-                startActivity(mIntent);
+                goActivity(DouYinActivity.class);
                 break;
             case 5:
-                mIntent = new Intent(this, DynamicActivity.class);
-                startActivity(mIntent);
+                goActivity(DynamicActivity.class);
                 break;
             case 6:
-                mIntent = new Intent(MainActivity.this, FileActivity.class);
-                startActivity(mIntent);
+                goActivity(FileActivity.class);
                 break;
             case 7:
-                mIntent = new Intent(this, AlarmClockActivity.class);
-                startActivity(mIntent);
+                goActivity(AlarmClockActivity.class);
                 break;
             case 8:
-                mIntent = new Intent(this, ImageProgressActivity.class);
-                startActivity(mIntent);
+                goActivity(ImageProgressActivity.class);
                 break;
             case 9:
-                mIntent = new Intent(this, BezierCurveActivity.class);
-                startActivity(mIntent);
+                goActivity(BezierCurveActivity.class);
                 break;
             case 10:
-                mIntent = new Intent(this, SuspendActivity.class);
-                startActivity(mIntent);
+                goActivity(SuspendActivity.class);
                 break;
             case 11:
-                mIntent = new Intent(this, GalleryActivity.class);
-                startActivity(mIntent);
+                goActivity(GalleryActivity.class);
                 break;
             case 12:
-                mIntent = new Intent(this, CloudVideoActivity.class);
-                startActivity(mIntent);
+                goActivity(CloudVideoActivity.class);
                 break;
+            case 13:
+                goActivity(JND2BActivity.class);
             default:
                 break;
         }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".jND2B.JND2BActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="55dp">
+
+            <com.flb.sample.fzw.widgets.CountNumberView
+                android:id="@+id/tv_number_one"
+                android:layout_width="0dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/shape_orange"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@mipmap/jia"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
+            <com.flb.sample.fzw.widgets.CountNumberView
+                android:id="@+id/tv_number_two"
+                android:layout_width="0dp"
+                android:layout_marginTop="1dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginRight="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/shape_orange"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:src="@mipmap/jia"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
+            <com.flb.sample.fzw.widgets.CountNumberView
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:id="@+id/tv_number_three"
+                android:background="@drawable/shape_orange"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:src="@mipmap/dengyu"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
+            <com.flb.sample.fzw.widgets.CountNumberView
+                android:id="@+id/tv_number"
+                android:layout_width="0dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/shape_orange"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_number"
+            android:layout_width="match_parent"
+            android:layout_below="@id/top"
+            android:layout_above="@id/btn_start"
+            android:padding="6dp"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/btn_history"
+            android:text="查看记录"
+            android:layout_above="@id/btn_start"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_width="70dp"
+            android:background="@drawable/tab_item_checked"
+            android:layout_height="70dp" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:text="开始"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:background="@drawable/tab_item_checked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</FrameLayout>
