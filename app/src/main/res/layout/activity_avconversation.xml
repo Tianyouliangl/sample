@@ -1,71 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/video_rl"
-    android:background="@color/color80Black"
+    android:id="@+id/rl_group"
     android:layout_height="match_parent"
     tools:context=".cloudvideo.AVConversationActivity">
 
-    <com.tencent.rtmp.ui.TXCloudVideoView
-        android:id="@+id/fl_group"
+    <FrameLayout
+        android:id="@+id/frame_video"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_user_exit"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:background="@color/tab_color_false"
         android:layout_height="match_parent">
-    </com.tencent.rtmp.ui.TXCloudVideoView>
+        <ImageView
+            android:id="@+id/iv_hang_up"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="48dp"
+            android:src="@mipmap/hang_up" />
 
-    <com.tencent.rtmp.ui.TXCloudVideoView
-        android:id="@+id/fl_child"
-        android:layout_width="120dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/black"
-        android:layout_height="150dp">
-    </com.tencent.rtmp.ui.TXCloudVideoView>
-
-
-    <ImageView
-        android:id="@+id/iv_torch"
-        android:src="@mipmap/torch_n"
-        android:padding="3dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_user_msg"
+            android:layout_width="wrap_content"
+            android:text="对方已离开..."
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_audio"
-        android:layout_width="50dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="50dp"
-        android:src="@mipmap/audio_y"
-        android:padding="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_height="50dp" />
 
-
-    <ImageView
-        android:id="@+id/iv_hangUp"
-        android:text="挂断"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:src="@mipmap/hang_up"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
-
-    <ImageView
-        android:id="@+id/iv_camera"
-        android:layout_width="50dp"
-        android:src="@mipmap/camera_change"
-        android:padding="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="30dp"
-        android:layout_height="50dp" />
 
 </RelativeLayout>

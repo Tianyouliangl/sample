@@ -2,4 +2,5 @@
     <string name="app_name">Sample</string>
     <string name="retract">收起</string>
     <string name="spread">展开</string>
+    <string name="str_tag_pos">POS</string>
 </resources>

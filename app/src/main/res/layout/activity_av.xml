@@ -70,4 +70,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="实现接听场景必须有一方推送自己的流(可以下载腾讯云官方的demo进行尝试),本demo与本demo进行视频通话,需要在加入房间时推送自己的流"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/color_red"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

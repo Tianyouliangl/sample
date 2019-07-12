@@ -1,10 +1,10 @@
 package com.flb.sample.fzw.cloudvideo;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.TextureView;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,250 +13,156 @@ import android.widget.Toast;
 
 import com.flb.sample.fzw.BaseActivity;
 import com.flb.sample.fzw.R;
-import com.flb.sample.fzw.common.Constant;
 import com.flb.sample.fzw.widgets.VideoUtils;
-import com.tencent.liteav.TXLiteAVCode;
-import com.tencent.rtmp.ui.TXCloudVideoView;
-import com.tencent.trtc.TRTCCloud;
-import com.tencent.trtc.TRTCCloudDef;
-import com.tencent.trtc.TRTCCloudListener;
-import com.tls.tls_sigature.tls_sigature;
 
-import java.lang.ref.WeakReference;
-
+import me.bakumon.statuslayoutmanager.library.OnStatusChildClickListener;
 import me.bakumon.statuslayoutmanager.library.StatusLayoutManager;
 
-public class AVConversationActivity extends BaseActivity implements View.OnClickListener {
+public class AVConversationActivity extends BaseActivity implements TenXunVideoHelper.TenXunImCallBack, OnStatusChildClickListener, View.OnClickListener {
 
-    private String TAG = "Video";
-    private long firstTime;// 记录点击返回时第一次的时间毫秒值
-    private TRTCCloudListenerImpl trtcListener;
-    private TRTCCloud trtcCloud;
-    private TXCloudVideoView view_group;
-    private TXCloudVideoView view_child;
-    private ImageView iv_hangUp;
-    private RelativeLayout video_rl;
-    private StatusLayoutManager statusLayoutManager;
-    private Boolean isChild = true;    // 画面切换
-    private Boolean isTorch = false;  // 闪光灯
-    private Boolean isAudio = true;  // 声音
-    private Boolean isShowGroupUI = true; // 画面按钮
-    private String mUserId;
-    private ImageView iv_torch;
-    private ImageView iv_audio;
-    private ImageView iv_camera;
+
+    private FrameLayout frame_video;
+    private TenXunVideoHelper tenXunVideoHelper;
+    private StatusLayoutManager layoutManager;
+    private ImageView iv_hang_up;
+    private RelativeLayout rl_user_exit;
+    private int VIDEO_CODE = 0; // 0 正在加入/创建房间 1  加入/创建房间成功 2等待呼叫 3正在视频  4  对方退出
 
     @Override
     public int getContentView() {
+        //应用运行时，保持屏幕高亮，不锁屏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         return R.layout.activity_avconversation;
     }
 
     @Override
     public void initView() {
-        view_group = findViewById(R.id.fl_group);
-        view_child = findViewById(R.id.fl_child);
-        iv_hangUp = findViewById(R.id.iv_hangUp);
-        video_rl = findViewById(R.id.video_rl);
-        iv_torch = findViewById(R.id.iv_torch);
-        iv_audio = findViewById(R.id.iv_audio);
-        iv_camera = findViewById(R.id.iv_camera);
-        statusLayoutManager = new StatusLayoutManager.Builder(video_rl).build();
-        // 加载中
-        statusLayoutManager.showCustomLayout(R.layout.status_video_loading);
+        frame_video = findViewById(R.id.frame_video);
+        rl_user_exit = findViewById(R.id.rl_user_exit);
+        iv_hang_up = findViewById(R.id.iv_hang_up);
+        showAndHide(true);
+    }
+
+    private void showAndHide(boolean b) {
+        frame_video.setVisibility(b == true ? View.VISIBLE : View.GONE);
+        rl_user_exit.setVisibility(b == true ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void initData() {
-        TRTCCloudDef.TRTCParams params = new TRTCCloudDef.TRTCParams();
-        params.sdkAppId = Constant.Video.SdkAppId;
-        params.userId = VideoUtils.getUserId();
-        params.userSig = VideoUtils.getUserSign(params.userId);
-        params.roomId = Integer.valueOf(getIntentString("roomId"));
-        trtcListener = new TRTCCloudListenerImpl();
-        trtcCloud = TRTCCloud.sharedInstance(this);
-        trtcCloud.setListener(trtcListener);
-        trtcCloud.enterRoom(params, 1);
-        iv_hangUp.setOnClickListener(this);
-        view_child.setOnClickListener(this);
-        iv_torch.setOnClickListener(this);
-        iv_audio.setOnClickListener(this);
-        iv_camera.setOnClickListener(this);
-        view_group.setOnClickListener(this);
-        Log.d(TAG, "sdk RoomId ---" + params.roomId + "---UserId----" + params.userId + "---sdkAppId---" + params.sdkAppId + "----sign-----" + params.userSig);
+        layoutManager = new StatusLayoutManager.Builder(frame_video).setOnStatusChildClickListener(this).build();
+        layoutManager.showCustomLayout(R.layout.layout_video_loading);
+        String userId = VideoUtils.getUserId();
+        tenXunVideoHelper = new TenXunVideoHelper(this, this);
+        tenXunVideoHelper.initData(userId, VideoUtils.getUserSign(userId), Integer.valueOf(getIntentString("roomId")));
+        View view = tenXunVideoHelper.initView(frame_video, false);
+        frame_video.addView(view);
+        iv_hang_up.setOnClickListener(this);
+    }
+
+    @Override
+    public void onError(String msg, int code) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPermissionError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onFinishRoom() {
+        finish();
+    }
+
+    @Override
+    public void onJoinSuccess(String roomId) {
+        VIDEO_CODE = 1;
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_video_loading2, null, false);
+        TextView tv_room = view.findViewById(R.id.tv_roomId);
+        tv_room.setText(roomId);
+        layoutManager.showCustomLayout(view, R.id.iv_loading_up);
+    }
+
+    @Override
+    public void onNewUserEnterRoom(String userName, String roomId) {
+        VIDEO_CODE = 2;
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_status_video_answer, null, false);
+        TextView roomName = view.findViewById(R.id.tv_room);
+        TextView msg = view.findViewById(R.id.tv_msg);
+        roomName.setText(roomId);
+        msg.setText(userName + "邀请您进行视频通话...");
+        layoutManager.showCustomLayout(view, R.id.iv_answer_hang_up, R.id.iv_answer_answer);
+    }
+
+    @Override
+    public void onUserExit() {
+        if (VIDEO_CODE == 2) {
+            Toast.makeText(this,"对方已取消",Toast.LENGTH_SHORT).show();
+            tenXunVideoHelper.exitRoom();
+        } else {
+            showAndHide(false);
+        }
+
+
+    }
+
+    @Override
+    public void onUserAnewJoin() {
+        showAndHide(true);
+    }
+
+    @Override
+    public void onEmptyChildClick(View view) {
+
+    }
+
+    @Override
+    public void onErrorChildClick(View view) {
+
+    }
+
+    @Override
+    public void onCustomerChildClick(View view) {
+        if (view.getId() == R.id.iv_loading_up) {
+            tenXunVideoHelper.exitRoom();
+        }
+        if (view.getId() == R.id.iv_answer_hang_up) {
+            tenXunVideoHelper.exitRoom();
+        }
+        if (view.getId() == R.id.iv_answer_answer) {
+            tenXunVideoHelper.Answer();
+            VIDEO_CODE = 3;
+            layoutManager.showSuccessLayout();
+            showAndHide(true);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_hangUp) {
-            trtcCloud.exitRoom();
-            finish();
-        }
-        if (v.getId() == R.id.fl_child) {
-            changeVideoView();
-        }
-        if (v.getId() == R.id.iv_torch) {
-            if (isTorch) {
-                trtcCloud.enableTorch(false);
-                iv_torch.setImageResource(R.mipmap.torch_n);
-                isTorch = false;
-                return;
-            }
-            if (!isTorch) {
-                trtcCloud.enableTorch(true);
-                iv_torch.setImageResource(R.mipmap.torch_y);
-                isTorch = true;
-                return;
-            }
-        }
-        if (v.getId() == R.id.iv_audio) {
-            if (isAudio) {
-                trtcCloud.stopLocalAudio();
-                iv_audio.setImageResource(R.mipmap.audio_n);
-                isAudio = false;
-                return;
-            }
-            if (!isAudio) {
-                trtcCloud.startLocalAudio();
-                iv_audio.setImageResource(R.mipmap.audio_y);
-                isAudio = true;
-                return;
-            }
-        }
-        if (v.getId() == R.id.iv_camera) {
-            trtcCloud.switchCamera();
-        }
-
-        if (v.getId() == R.id.fl_group) {
-            Boolean aBoolean = changeGroupUI(600);
-            if (aBoolean) {
-                if (isShowGroupUI) {
-                    hideAndShow(false);
-                    isShowGroupUI = false;
-                    return;
-                }
-                if (!isShowGroupUI) {
-                    hideAndShow(true);
-                    isShowGroupUI = true;
-                    return;
-                }
-            }
+        if (v.getId() == R.id.iv_hang_up) {
+            tenXunVideoHelper.exitRoom();
         }
     }
 
-
-    void hideAndShow(Boolean b) {
-        iv_torch.setVisibility(b == true ? View.VISIBLE : View.GONE);
-        iv_audio.setVisibility(b == true ? View.VISIBLE : View.GONE);
-        iv_hangUp.setVisibility(b == true ? View.VISIBLE : View.GONE);
-        iv_camera.setVisibility(b == true ? View.VISIBLE : View.GONE);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            tenXunVideoHelper.exitRoom();
+        }
+        if (keyCode == KeyEvent.KEYCODE_HOME){
+            tenXunVideoHelper.stopLocal();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
-
-    void changeVideoView() {
-        new Thread(){
-            @Override
-            public void run() {
-                trtcCloud.stopLocalPreview();
-                trtcCloud.stopRemoteView(mUserId);
-                if (isChild) {
-                    startLocalPreview(true, view_child);
-                    startRemotePreview(mUserId, view_group);
-                    isChild = false;
-                    return;
-                }
-                if (!isChild) {
-                    startLocalPreview(true, view_group);
-                    startRemotePreview(mUserId, view_child);
-                    isChild = true;
-                    return;
-                }
-            }
-        }.start();
-
-    }
-
-    class TRTCCloudListenerImpl extends TRTCCloudListener {
-
-        // 错误通知是要监听的，错误通知意味着 SDK 不能继续运行了
-        @Override
-        public void onError(int errCode, String errMsg, Bundle extraInfo) {
-            Log.d(TAG, "sdk callback onError --- " + errMsg + "-----code-----" + errCode);
-            Toast.makeText(AVConversationActivity.this, "onError: " + errMsg + "[" + errCode + "]", Toast.LENGTH_SHORT).show();
-            if (errCode == TXLiteAVCode.ERR_ROOM_ENTER_FAIL) {
-                finish();
-            }
-        }
-
-        @Override
-        public void onEnterRoom(long l) {
-            Log.d(TAG, "sdk callback Success ---  创建/加入房间成功");
-            statusLayoutManager.showCustomLayout(R.layout.status_video_user_loading);
-            startLocalPreview(true, view_group);
-            trtcCloud.startLocalAudio();
-        }
-
-        // 有新用户加入了房间
-        @Override
-        public void onUserEnter(String userId) {
-            mUserId = userId;
-            Log.d(TAG, "sdk onUserEnter --- " + "---用户加入---");
-            statusLayoutManager.showSuccessLayout();
-            startRemotePreview(userId, view_child);
-        }
-
-        @Override
-        public void onUserAudioAvailable(String userId, boolean b) {
-            Log.d(TAG, "sdk onUserEnter --- ");
-        }
-
-        @Override
-        public void onExitRoom(int i) {
-            Log.d(TAG, "sdk onExitRoom --- ");
-        }
-    }
-
-    /**
-     * 打开远程画面
-     *
-     * @param mUserId
-     * @param view
-     */
-
-    void startRemotePreview(String mUserId, TXCloudVideoView view) {
-        trtcCloud.setRemoteViewFillMode(mUserId, TRTCCloudDef.TRTC_VIDEO_RENDER_MODE_FILL);
-        trtcCloud.startRemoteView(mUserId, view);
-    }
-
-
-    /**
-     * 打开本地摄像头预览画面
-     */
-    void startLocalPreview(boolean frontCamera, TXCloudVideoView localVideoView) {
-        trtcCloud.setLocalViewFillMode(TRTCCloudDef.TRTC_VIDEO_RENDER_MODE_FIT);
-        trtcCloud.startLocalPreview(frontCamera, localVideoView);
-    }
-
-    Boolean changeGroupUI(long timeInterval) {
-        // 第一次肯定会进入到if判断里面，然后把firstTime重新赋值当前的系统时间
-        // 然后点击第二次的时候，当点击间隔时间小于2s，那么退出应用；反之不退出应用
-        if (System.currentTimeMillis() - firstTime >= timeInterval) {
-            firstTime = System.currentTimeMillis();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    // 销毁 trtcCloud 实例，在不再使用SDK能力时，销毁单例，节省开销3
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //销毁 trtc 实例
-        if (trtcCloud != null) {
-            trtcCloud.setListener(null);
-        }
-        trtcCloud = null;
-        TRTCCloud.destroySharedInstance();
+        tenXunVideoHelper.exitRoom();
     }
 }
