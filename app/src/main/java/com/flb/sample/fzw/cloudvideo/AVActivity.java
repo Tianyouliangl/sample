@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.flb.sample.fzw.BaseActivity;
 import com.flb.sample.fzw.R;
+import com.flb.sample.fzw.cloudvideo.video.AVConversationActivity;
 import com.tencent.cos.xml.utils.StringUtils;
 
 public class AVActivity extends BaseActivity implements View.OnClickListener {

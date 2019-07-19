@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flb.sample.fzw.R;
+import com.flb.sample.fzw.model.FileBean;
 import com.tencent.cos.xml.model.tag.ListAllMyBuckets;
 import com.tencent.cos.xml.model.tag.ListBucket;
 
@@ -20,17 +21,20 @@ import java.util.List;
  */
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder> {
 
-    List<ListBucket.Contents> contentsList;
+    List<FileBean> contentsList;
     Context mContext;
     private fileInterface mOnClick;
 
     public interface fileInterface {
-        void onClickItem(ListBucket.Contents contents);
 
-        void onClickItemDown(ListBucket.Contents contents,View view);
+        void onClickItem(FileBean contents);
+
+        void onClickItemDown(FileBean contents,View view);
+
+        void onClickItemDelete();
     }
 
-    public FileAdapter(List<ListBucket.Contents> contentsList, Context mContext) {
+    public FileAdapter(List<FileBean> contentsList, Context mContext) {
         this.contentsList = contentsList;
         this.mContext = mContext;
     }
@@ -43,8 +47,13 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
 
     @Override
     public void onBindViewHolder(FileViewHolder holder, int position) {
-        ListBucket.Contents contents = contentsList.get(position);
+        FileBean contents = contentsList.get(position);
         holder.tv_title.setText(contents.key);
+        if (contents.getType() == 1){
+            holder.iv_file_down.setImageResource(R.mipmap.refresh);
+        }else {
+            holder.iv_file_down.setImageResource(R.mipmap.file_down);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +66,11 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
             @Override
             public void onClick(View v) {
                 if (mOnClick != null){
-                    mOnClick.onClickItemDown(contents,holder.iv_file_down);
+                    if (contents.getType() == 0){
+                        mOnClick.onClickItemDown(contents,holder.iv_file_down);
+                    }else {
+                        mOnClick.onClickItemDelete();
+                    }
                 }
             }
         });

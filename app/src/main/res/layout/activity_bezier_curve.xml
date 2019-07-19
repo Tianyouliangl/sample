@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.codebear.keyboard.CBEmoticonsKeyBoard xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/ekb_emoticons_keyboard"
     android:layout_height="match_parent"
     tools:context=".bezierCurve.BezierCurveActivity">
 
-    <com.flb.sample.fzw.widgets.TRTVideoRelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.flb.sample.fzw.widgets.TRTVideoRelativeLayout>
 
-</RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</com.codebear.keyboard.CBEmoticonsKeyBoard>

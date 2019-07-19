@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flb.sample.fzw.R;
@@ -40,14 +42,20 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.BucketHold
 
     @Override
     public void onBindViewHolder(BucketHolder holder, int position) {
-        holder.name.setText("储存桶名称 :"+buckets.get(position).name);
-        holder.location.setText("所属地域 :"+buckets.get(position).location);
-        holder.createDate.setText("创建时间 :"+buckets.get(position).createDate);
+        holder.ll_buck.setVisibility(position == buckets.size() ? View.GONE :View.VISIBLE);
+        holder.new_buck.setVisibility(position == buckets.size() ? View.VISIBLE:View.GONE);
+        if (position < buckets.size()){
+            holder.name.setText("储存桶名称 :"+buckets.get(position).name);
+            holder.location.setText("所属地域 :"+buckets.get(position).location);
+            holder.createDate.setText("创建时间 :"+buckets.get(position).createDate);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mItemBucket != null){
-                    mItemBucket.onClickItem(buckets.get(position));
+                    if (position < buckets.size()){
+                        mItemBucket.onClickItem(buckets.get(position));
+                    }
                 }
             }
         });
@@ -55,7 +63,7 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.BucketHold
 
     @Override
     public int getItemCount() {
-        return buckets.size();
+        return buckets.size()+1;
     }
 
     class BucketHolder extends RecyclerView.ViewHolder {
@@ -63,12 +71,16 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.BucketHold
         public TextView name;
         public TextView location;
         public TextView createDate;
+        public LinearLayout ll_buck;
+        public RelativeLayout new_buck;
 
         public BucketHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_bucket_name);
             location = itemView.findViewById(R.id.tv_bucket_location);
             createDate = itemView.findViewById(R.id.tv_bucket_createDate);
+            ll_buck = itemView.findViewById(R.id.ll_buck);
+            new_buck = itemView.findViewById(R.id.rl_new_buck);
         }
     }
 

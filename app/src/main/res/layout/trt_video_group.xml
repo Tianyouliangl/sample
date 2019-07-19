@@ -7,7 +7,7 @@
         android:id="@+id/rl_big"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/tab_color_true">
+        android:background="@color/transparent_db">
 
         <com.tencent.rtmp.ui.TXCloudVideoView
             android:id="@+id/tvv_big"

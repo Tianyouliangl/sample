@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/rl_group"
     android:layout_height="match_parent"
-    tools:context=".cloudvideo.AVConversationActivity">
+    tools:context=".cloudvideo.video.AVConversationActivity">
 
     <FrameLayout
         android:id="@+id/frame_video"

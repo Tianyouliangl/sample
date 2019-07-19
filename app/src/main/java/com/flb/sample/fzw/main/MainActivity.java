@@ -1,11 +1,16 @@
 package com.flb.sample.fzw.main;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flb.sample.fzw.BaseActivity;
 import com.flb.sample.fzw.R;
 import com.flb.sample.fzw.adapter.MainRecyclerViewAdapter;
@@ -19,9 +24,12 @@ import com.flb.sample.fzw.gallery.GalleryActivity;
 import com.flb.sample.fzw.imageprogress.ImageProgressActivity;
 import com.flb.sample.fzw.jND2B.JND2BActivity;
 import com.flb.sample.fzw.keyBoard.KeyBoardActivity;
+import com.flb.sample.fzw.model.FileDownBean;
 import com.flb.sample.fzw.securityCode.SecurityCodeActivity;
+import com.flb.sample.fzw.service.FileDownService;
 import com.flb.sample.fzw.statusLayoutManager.StatusLayoutManagerActivity;
 import com.flb.sample.fzw.suspend.SuspendActivity;
+import com.flb.sample.fzw.widgets.LogUtil;
 import com.flb.sample.fzw.widgets.SwipeItemLayout;
 import com.flb.sample.fzw.zXing.ZXingActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -37,7 +45,19 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
     private List<String> mList;
     private MainRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManage;
-    Intent mIntent = null;
+    private static FileDownService service;
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            FileDownService.FileBind myBinder = (FileDownService.FileBind) binder;
+            service = myBinder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service = null;
+        }
+    };
 
     @Override
     public int getContentView() {
@@ -56,7 +76,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("自定义TabLayout");
         mList.add("闹钟");
         mList.add("图片加载进度(没写完)");
-        mList.add("贝塞尔曲线");
+        mList.add("表情键盘");
         mList.add("悬浮(根布局)");
         mList.add("RecyclerView(画廊效果)");
         mList.add("腾讯云视频Demo");
@@ -75,14 +95,15 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
 
     private void createPermissions() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
-
+                    Intent intent = new Intent(MainActivity.this, FileDownService.class);
+                    bindService(intent, conn, BIND_AUTO_CREATE);
                 } else {
                     //只要有一个权限被拒绝，就会执行
-                    finish();
+                   MainActivity.this.finish();
                 }
             }
         });
@@ -161,4 +182,63 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
 
     }
 
+    /**
+     * 获取进度
+     * @return
+     */
+    public static FileDownBean getProgress() {
+        if (service != null) {
+            FileDownBean downBean = service.getFileDownBean();
+            if (downBean != null) {
+                LogUtil.i("------获取进度-----" + downBean.getPb());
+                return downBean;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 添加下载任务
+     * @param bean
+     */
+    public static void setData(FileDownBean bean){
+        if (service != null){
+            service.setData(bean);
+        }
+    }
+
+    /**
+     * 获取未下载成功个数
+     */
+    public static int getSize(){
+        if (service != null){
+            int fileSize = service.getDownFileSize();
+            LogUtil.i("------获取未下载成功个数-----" + fileSize);
+            return fileSize;
+        }else {
+            return 0;
+        }
+    }
+
+    /**
+     * 获取任务列表
+     */
+    public static List<FileDownBean> getSpinnerList(){
+        if (service != null){
+            List<FileDownBean> list = service.getList();
+            LogUtil.i("------获取任务列表-----" + list.size());
+            return list;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
+    }
 }

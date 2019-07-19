@@ -85,8 +85,9 @@
         <activity android:name=".cloudvideo.CloudVideoActivity" />
         <activity android:name=".cloudvideo.DownAndUpActivity" />
         <activity android:name=".cloudvideo.AVActivity" />
-        <activity android:name=".cloudvideo.AVConversationActivity" />
-        <activity android:name=".jND2B.JND2BActivity"></activity>
+        <activity android:name=".cloudvideo.video.AVConversationActivity" />
+        <activity android:name=".jND2B.JND2BActivity" />
+        <activity android:name=".cloudvideo.SpinnerActivity"></activity>
     </application>
 
 </manifest>

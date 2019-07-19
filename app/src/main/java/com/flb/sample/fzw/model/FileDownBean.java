@@ -1,10 +1,12 @@
 package com.flb.sample.fzw.model;
 
+import java.io.Serializable;
+
 /**
  * author : fengzhangwei
  * date : 2019/7/5
  */
-public class FileDownBean {
+public class FileDownBean implements Serializable{
 
     private int DownType = 0;  // 下载状态  0 等待下载 1下载中  2暂停 3取消 4完成
     private int UploadType = 0;// 上传状态  0 等待上传 1上传中  2暂停 3取消 4完成
@@ -13,6 +15,16 @@ public class FileDownBean {
     private String path;     // 文件路径(上传/下载)
     private String DownName; // 下载到本地的文件名(默认为下载时的文件名)
     private String bucketName; // 储存桶名称
+    private int pb;          // 上传/下载 进度
+
+
+    public int getPb() {
+        return pb;
+    }
+
+    public void setPb(int pb) {
+        this.pb = pb;
+    }
 
     public int getDownType() {
         return DownType;

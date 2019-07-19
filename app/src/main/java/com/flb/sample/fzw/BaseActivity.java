@@ -95,6 +95,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
         tv_Confirm.setOnClickListener(onClickListener);
     }
+    protected void initToolbar(String title, Boolean ivBack,int image,View.OnClickListener onClickListener) {
+        ImageView back = findViewById(R.id.iv_back);
+        ImageView up = findViewById(R.id.iv_up);
+        TextView tv_Confirm = findViewById(R.id.tv_right_confirm);
+        back.setVisibility(ivBack == true ? View.VISIBLE : View.GONE);
+        up.setVisibility(View.VISIBLE);
+        tv_Confirm.setVisibility(View.GONE);
+        TextView title_bar = findViewById(R.id.tv_title_bar);
+        if (!StringUtils.isEmpty(title)) {
+            title_bar.setText(title);
+        }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        up.setImageResource(image);
+        up.setOnClickListener(onClickListener);
+    }
+
 
     protected void setBarRightMsg(String msg) {
         TextView tv_right_confirm = findViewById(R.id.tv_right_confirm);

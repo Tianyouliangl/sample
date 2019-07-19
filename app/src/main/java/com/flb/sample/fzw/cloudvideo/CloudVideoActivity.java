@@ -67,7 +67,7 @@ public class CloudVideoActivity extends BaseActivity implements View.OnClickList
             buckets.clear();
         }
         // 加载中
-        statusLayoutManager.showLoadingLayout();
+        statusLayoutManager.showCustomLayout(R.layout.layout_status_loading_spinkit);
         getBuckets();
     }
 

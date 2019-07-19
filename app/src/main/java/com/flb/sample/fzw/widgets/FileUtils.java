@@ -222,7 +222,7 @@ public class FileUtils {
                 file.createNewFile();
             }
         } catch (IOException e) {
-            Log.e("fzw", "", e);
+            LogUtil.i(e.toString());
             return null;
         }
         return file;
@@ -1063,9 +1063,4 @@ public class FileUtils {
         }
     }
 
-
-
-    public static String getFileMd5(String path){
-        return "";
-    }
 }
