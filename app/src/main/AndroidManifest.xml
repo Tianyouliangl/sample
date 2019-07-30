@@ -87,7 +87,12 @@
         <activity android:name=".cloudvideo.AVActivity" />
         <activity android:name=".cloudvideo.video.AVConversationActivity" />
         <activity android:name=".jND2B.JND2BActivity" />
-        <activity android:name=".cloudvideo.SpinnerActivity"></activity>
+        <activity android:name=".cloudvideo.SpinnerActivity" />
+        <activity android:name=".thirdparty.SelectorActivity" />
+        <activity android:name=".thirdparty.msgActivity.QQActivity" />
+        <activity android:name=".thirdparty.msgActivity.ZFBActivity" />
+        <activity android:name=".thirdparty.msgActivity.WXActivity" />
+        <activity android:name=".cloudvideo.video.CameraVideoActivity"></activity>
     </application>
 
 </manifest>

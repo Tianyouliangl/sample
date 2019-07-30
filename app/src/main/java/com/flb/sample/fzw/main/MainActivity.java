@@ -17,6 +17,7 @@ import com.flb.sample.fzw.adapter.MainRecyclerViewAdapter;
 import com.flb.sample.fzw.alarm.AlarmClockActivity;
 import com.flb.sample.fzw.bezierCurve.BezierCurveActivity;
 import com.flb.sample.fzw.cloudvideo.CloudVideoActivity;
+import com.flb.sample.fzw.cloudvideo.video.CameraVideoActivity;
 import com.flb.sample.fzw.douyin.DouYinActivity;
 import com.flb.sample.fzw.dynamic.DynamicActivity;
 import com.flb.sample.fzw.file.FileActivity;
@@ -29,6 +30,7 @@ import com.flb.sample.fzw.securityCode.SecurityCodeActivity;
 import com.flb.sample.fzw.service.FileDownService;
 import com.flb.sample.fzw.statusLayoutManager.StatusLayoutManagerActivity;
 import com.flb.sample.fzw.suspend.SuspendActivity;
+import com.flb.sample.fzw.thirdparty.SelectorActivity;
 import com.flb.sample.fzw.widgets.LogUtil;
 import com.flb.sample.fzw.widgets.SwipeItemLayout;
 import com.flb.sample.fzw.zXing.ZXingActivity;
@@ -54,7 +56,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onServiceDisconnected(ComponentName name)  {
             service = null;
         }
     };
@@ -81,6 +83,8 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("RecyclerView(画廊效果)");
         mList.add("腾讯云视频Demo");
         mList.add("加拿大幸运2B");
+        mList.add("第三方");
+        mList.add("视频采集");
         setAdapter();
     }
 
@@ -95,7 +99,8 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
 
     private void createPermissions() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
@@ -122,53 +127,75 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
 
     @Override
     public void onClickItem(int position) {
-
-        switch (position) {
-            case 0:
+        String s = mList.get(position);
+        switch (s) {
+            case "StatusLayoutManager":
                 goActivity(StatusLayoutManagerActivity.class);
                 break;
-            case 1:
+            case "SecurityCode":
                 goActivity(SecurityCodeActivity.class);
                 break;
-            case 2:
+            case "KeyBoardStatus":
                 goActivity(KeyBoardActivity.class);
                 break;
-            case 3:
+            case "ThinkChange":
                 goActivity(ZXingActivity.class);
                 break;
-            case 4:
+            case "仿抖音上下滑动":
                 goActivity(DouYinActivity.class);
                 break;
-            case 5:
+            case "上传图片(多张)":
                 goActivity(DynamicActivity.class);
                 break;
-            case 6:
+            case "自定义TabLayout":
                 goActivity(FileActivity.class);
                 break;
-            case 7:
+            case "闹钟":
                 goActivity(AlarmClockActivity.class);
                 break;
-            case 8:
+            case "图片加载进度(没写完)":
                 goActivity(ImageProgressActivity.class);
                 break;
-            case 9:
+            case "表情键盘":
                 goActivity(BezierCurveActivity.class);
                 break;
-            case 10:
+            case "悬浮(根布局)":
                 goActivity(SuspendActivity.class);
                 break;
-            case 11:
+            case "RecyclerView(画廊效果)":
                 goActivity(GalleryActivity.class);
                 break;
-            case 12:
+            case "腾讯云视频Demo":
                 goActivity(CloudVideoActivity.class);
                 break;
-            case 13:
+            case "加拿大幸运2B":
                 goActivity(JND2BActivity.class);
+                break;
+            case "第三方":
+                goActivity(SelectorActivity.class);
+                break;
+            case "视频采集":
+                getPermission();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void getPermission() {
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean){
+                    goActivity(CameraVideoActivity.class);
+                }else {
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
