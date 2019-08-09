@@ -7,8 +7,6 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.flb.sample.fzw.BaseActivity;
@@ -84,7 +82,7 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
         mList.add("腾讯云视频Demo");
         mList.add("加拿大幸运2B");
         mList.add("第三方");
-        mList.add("视频采集");
+        mList.add("渐变");
         setAdapter();
     }
 
@@ -174,28 +172,13 @@ public class MainActivity extends BaseActivity implements MainRecyclerViewAdapte
             case "第三方":
                 goActivity(SelectorActivity.class);
                 break;
-            case "视频采集":
-                getPermission();
+            case "渐变":
+                goActivity(CameraVideoActivity.class);
                 break;
             default:
                 break;
         }
 
-    }
-
-    private void getPermission() {
-        RxPermissions permissions = new RxPermissions(this);
-        permissions.request(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean){
-                    goActivity(CameraVideoActivity.class);
-                }else {
-                    finish();
-                }
-            }
-        });
     }
 
     @Override

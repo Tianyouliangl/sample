@@ -92,7 +92,7 @@
         <activity android:name=".thirdparty.msgActivity.QQActivity" />
         <activity android:name=".thirdparty.msgActivity.ZFBActivity" />
         <activity android:name=".thirdparty.msgActivity.WXActivity" />
-        <activity android:name=".cloudvideo.video.CameraVideoActivity"></activity>
+        <activity android:name=".cloudvideo.video.CameraVideoActivity" />
     </application>
 
 </manifest>
